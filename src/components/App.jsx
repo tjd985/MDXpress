@@ -1,26 +1,21 @@
+import { Route, Routes, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { Reset } from "styled-reset";
 
-import Editor from "./Editor";
-import Preview from "./Preview";
+import Layout from "./Layout";
+import Home from "./Home";
 
 function App() {
   return (
-    <Container>
+    <>
       <Reset />
-      <Editor />
-      <Preview />
-    </Container>
+      <Layout />
+      <Routes>
+        <Route path="/id/:id/version/:version" element={<Home />} />
+        <Route path="/" element={<Navigate to="/id/:id/version/:version" />} />
+      </Routes>
+    </>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-`;
 
 export default App;

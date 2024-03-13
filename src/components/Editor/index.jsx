@@ -1,5 +1,15 @@
+import styled from "styled-components";
+
 function Editor() {
-  return <h1>This is Editor</h1>;
+  return <Container>This is Editor</Container>;
 }
+
+const Container = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
 
 export default Editor;
