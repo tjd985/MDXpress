@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { compile, run } from "@mdx-js/mdx";
 import * as jsxRuntime from "react/jsx-runtime";
@@ -7,8 +8,11 @@ import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
 import ErrorFallback from "../shared/ErrorFallback";
 
+import getVersionCode from "../services/getVersionCode";
+
 function MDXEditor({ setPreview }) {
   const [userCode, setUserCode] = useState("");
+  const { id, version } = useParams();
 
   const compileToJs = async () => {
     try {
@@ -23,6 +27,20 @@ function MDXEditor({ setPreview }) {
       setPreview(<ErrorFallback error={error} />);
     }
   };
+
+  async function setBoilerPlateCode(id, version) {
+    const requestResult = await getVersionCode(id, version);
+
+    if (requestResult.result === "ERROR") {
+      return;
+    }
+
+    setUserCode(requestResult.content);
+  }
+
+  useEffect(() => {
+    setBoilerPlateCode(id, version);
+  }, [id, version]);
 
   useEffect(() => {
     compileToJs();
