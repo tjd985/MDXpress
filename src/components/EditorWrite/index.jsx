@@ -33,7 +33,9 @@ function EditorWrite({ handleChange, value }) {
       KEYBOARD_STATUS[KEY_CMD] = false;
       KEYBOARD_STATUS[KEY_S] = false;
 
-      const { _id: temporaryUserId, version, code } = requestResult.content;
+      const { latestVersion, temporaryUser } = requestResult.content;
+      const { _id: temporaryUserId } = temporaryUser;
+      const { version, code } = latestVersion;
 
       navigate(`/id/${temporaryUserId}/version/${version}`, {
         state: {
