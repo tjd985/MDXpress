@@ -1,25 +1,30 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import Editor from "../Editor";
 import Preview from "../Preview";
 
 function Home() {
+  const [previewComponent, setPreviewComponent] = useState("");
+
   return (
     <Wrapper>
-      <Editor />
-      <Preview />
+      <Editor className="editor" setPreview={setPreviewComponent} />
+      <Preview previewComponent={previewComponent} />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  padding: 40px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 70vh;
+  padding: 20px;
 `;
 
 export default Home;
