@@ -19,7 +19,7 @@ async function saveCurrentCode(code, id) {
 
     return result;
   } catch (err) {
-    console.err(err);
+    console.log(err);
   }
 }
 
