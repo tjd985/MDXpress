@@ -10,7 +10,7 @@ function Home() {
   return (
     <Wrapper>
       <Editor className="editor" setPreview={setPreviewComponent} />
-      <Preview previewComponent={previewComponent} />
+      <Preview className="preview" previewComponent={previewComponent} />
     </Wrapper>
   );
 }
