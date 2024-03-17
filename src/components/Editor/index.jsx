@@ -8,7 +8,7 @@ import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
 import ErrorFallback from "../shared/ErrorFallback";
 
-import getVersionCode from "../services/getVersionCode";
+import getVersionCode from "../../services/getVersionCode";
 
 function MDXEditor({ setPreview }) {
   const [userCode, setUserCode] = useState("");
