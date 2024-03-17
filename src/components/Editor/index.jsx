@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import * as jsxRuntime from "react/jsx-runtime";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { compile, run } from "@mdx-js/mdx";
-import * as jsxRuntime from "react/jsx-runtime";
 
 import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
@@ -18,6 +18,7 @@ function MDXEditor({ setPreview }) {
     try {
       const compiledCode = await compile(userCode, {
         outputFormat: "function-body",
+        baseUrl: "/Users/ohseongho/Desktop/MDXpress/node_modules",
       });
       const result = await run(compiledCode.value, jsxRuntime);
       const MDXContent = result.default;
