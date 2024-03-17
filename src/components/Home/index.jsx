@@ -3,15 +3,25 @@ import styled from "styled-components";
 
 import Editor from "../Editor";
 import Preview from "../Preview";
+import Modal from "../shared/Modal";
+import Welcome from "../Welcome";
 
 function Home() {
   const [previewComponent, setPreviewComponent] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
-    <Wrapper>
-      <Editor className="editor" setPreview={setPreviewComponent} />
-      <Preview className="preview" previewComponent={previewComponent} />
-    </Wrapper>
+    <>
+      {isModalOpen && (
+        <Modal>
+          <Welcome setModalStatus={setIsModalOpen} />
+        </Modal>
+      )}
+      <Wrapper>
+        <Editor className="editor" setPreview={setPreviewComponent} />
+        <Preview className="preview" previewComponent={previewComponent} />
+      </Wrapper>
+    </>
   );
 }
 
