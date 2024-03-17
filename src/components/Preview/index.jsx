@@ -1,15 +1,13 @@
-import { useMemo } from "react";
 import styled from "styled-components";
+import { nanoid } from "nanoid";
 
 import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";
 
 function Preview({ previewComponent }) {
-  const key = useMemo(() => Math.random().toString(), [previewComponent]);
-
   return (
     <Container id="preview">
-      <ErrorBoundary key={key} FallbackComponent={ErrorFallback}>
+      <ErrorBoundary key={nanoid(10)} FallbackComponent={ErrorFallback}>
         {previewComponent}
       </ErrorBoundary>
     </Container>
