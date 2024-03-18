@@ -4,6 +4,8 @@ import styled from "styled-components";
 import getBundlePackageCode from "../../services/getBundleCode";
 import CONSTANTS from "../../constants/constants";
 
+import MDXpressLogo from "../../../assets/MDXpress-logo.png";
+
 function Header() {
   const [packageBlob, setPackageBlob] = useState(null);
 
@@ -47,7 +49,7 @@ function Header() {
 
   return (
     <CustomedHeader>
-      <Title>MDXpress</Title>
+      <LogoImage src={MDXpressLogo} />
       <InputLabel htmlFor="package-name">Package Name</InputLabel>
       <CustomInput
         id="package-name"
@@ -59,12 +61,9 @@ function Header() {
   );
 }
 
-const Title = styled.h1`
+const LogoImage = styled.img`
+  width: 100px;
   margin: 0 0 20px 0;
-
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
 `;
 
 const InputLabel = styled.label`
