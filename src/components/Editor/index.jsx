@@ -32,7 +32,7 @@ function MDXEditor({ setPreview }) {
   async function setBoilerPlateCode(id, version) {
     const requestResult = await getVersionCode(id, version);
 
-    if (requestResult.result === "ERROR") {
+    if (requestResult.result === "Error") {
       return;
     }
 
