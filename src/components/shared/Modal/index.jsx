@@ -3,14 +3,14 @@ import styled from "styled-components";
 function Modal({ children }) {
   return (
     <>
-      <ModalBackground />
-      <ModalContainer>{children}</ModalContainer>
+      <ModalBackground className="modal-background" />
+      <ModalContainer className="modal-container">{children}</ModalContainer>
     </>
   );
 }
 
 const ModalBackground = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1;
@@ -22,7 +22,7 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   z-index: 2;
