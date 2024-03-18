@@ -1,13 +1,24 @@
+import { useState } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+
+import Modal from "../shared/Modal";
+import Loading from "../shared/Loading";
+import Completion from "../shared/Completion";
 
 import saveCurrentCode from "../../services/saveCurrentCode";
-
 import CONSTANTS from "../../constants/constants";
 
+import completeImage from "../../../assets/complete.jpeg";
+
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
+const CLIENT_URL = import.meta.env.VITE_CLIENT_URL;
 
 function EditorWrite({ handleChange, value }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const currentURL = `${CLIENT_URL}${useLocation().pathname}`;
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -22,13 +33,19 @@ function EditorWrite({ handleChange, value }) {
 
     if (KEYBOARD_STATUS[KEY_CMD] && KEYBOARD_STATUS[KEY_S]) {
       ev.preventDefault();
-      const currentCode = ev.target.value;
 
+      setIsModalOpen(true);
+
+      const currentCode = ev.target.value;
       const requestResult = await saveCurrentCode(currentCode, id);
 
       if (requestResult.result === "Error") {
+        setIsModalOpen(false);
+
         return;
       }
+
+      setIsSaved(true);
 
       KEYBOARD_STATUS[KEY_CMD] = false;
       KEYBOARD_STATUS[KEY_S] = false;
@@ -46,13 +63,33 @@ function EditorWrite({ handleChange, value }) {
   }
 
   return (
-    <CustomEditorWrite
-      className="editor-write"
-      onChange={handleChange}
-      onKeyDown={handleKeyDown}
-      onKeyUp={handleKeyDown}
-      value={value}
-    />
+    <>
+      {isModalOpen && (
+        <Modal>
+          {isSaved ? (
+            <Completion
+              title="The save is complete!"
+              description="Try sharing the link with your colleagues!"
+              imageSrc={completeImage}
+              handleClick={() => {
+                setIsSaved(false);
+                setIsModalOpen(false);
+              }}
+              linkURL={currentURL}
+            />
+          ) : (
+            <Loading text="Saving your current code.\n Please wait a moment..." />
+          )}
+        </Modal>
+      )}
+      <CustomEditorWrite
+        className="editor-write"
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyDown}
+        value={value}
+      />
+    </>
   );
 }
 
