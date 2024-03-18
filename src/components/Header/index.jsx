@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import Modal from "../shared/Modal";
+import Loading from "../shared/Loading";
+
 import getBundlePackageCode from "../../services/getBundleCode";
 import CONSTANTS from "../../constants/constants";
 
@@ -8,6 +11,7 @@ import MDXpressLogo from "../../../assets/MDXpress-logo.png";
 
 function Header() {
   const [packageBlob, setPackageBlob] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!packageBlob) {
@@ -19,16 +23,22 @@ function Header() {
 
     packageScriptEl.src = packageBlobURL;
     document.body.append(packageScriptEl);
+
+    setIsModalOpen(false);
   }, [packageBlob]);
 
   async function handleSubmit(ev) {
     ev.preventDefault();
 
     if (ev.keyCode === CONSTANTS.KEY_ENTER) {
+      setIsModalOpen(true);
+
       const requestResult = await getBundlePackageCode(ev.target.value);
 
       if (requestResult.result === "Error") {
         console.log(requestResult.message);
+
+        setIsModalOpen(false);
 
         return;
       }
@@ -48,16 +58,23 @@ function Header() {
   }
 
   return (
-    <CustomedHeader>
-      <LogoImage src={MDXpressLogo} />
-      <InputLabel htmlFor="package-name">Package Name</InputLabel>
-      <CustomInput
-        id="package-name"
-        type="text"
-        onKeyUp={handleSubmit}
-        placeholder="Enter the third-party library you want to use! (ex: lodash)"
-      />
-    </CustomedHeader>
+    <>
+      {isModalOpen && (
+        <Modal>
+          <Loading text="Installing the requested library,\nplease wait a moment!" />
+        </Modal>
+      )}
+      <CustomedHeader>
+        <LogoImage src={MDXpressLogo} />
+        <InputLabel htmlFor="package-name">Package Name</InputLabel>
+        <CustomInput
+          id="package-name"
+          type="text"
+          onKeyUp={handleSubmit}
+          placeholder="Enter the third-party library you want to use! (ex: lodash)"
+        />
+      </CustomedHeader>
+    </>
   );
 }
 
