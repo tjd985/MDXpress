@@ -7,12 +7,19 @@ import { compile, run } from "@mdx-js/mdx";
 import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
 import ErrorFallback from "../shared/ErrorFallback";
+import Modal from "../shared/Modal";
+import Loading from "../shared/Loading";
 
 import getVersionCode from "../../services/getVersionCode";
 
+import usePackageStore from "../../store/packageList";
+
 function MDXEditor({ setPreview }) {
   const [userCode, setUserCode] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, version } = useParams();
+  const setPackage = usePackageStore(state => state.setPackage);
+  const packageList = usePackageStore(state => state.packageList);
 
   const compileToJs = async () => {
     try {
@@ -30,13 +37,53 @@ function MDXEditor({ setPreview }) {
   };
 
   async function setBoilerPlateCode(id, version) {
-    const requestResult = await getVersionCode(id, version);
+    setIsModalOpen(true);
 
-    if (requestResult.result === "Error") {
-      return;
+    try {
+      const requestResult = await getVersionCode(id, version);
+
+      if (requestResult.result === "Error") {
+        setIsModalOpen(false);
+
+        return;
+      }
+
+      const { targetCode, bundleCodeList } = requestResult.content;
+
+      if (!bundleCodeList.length) {
+        setUserCode(targetCode);
+        setIsModalOpen(false);
+
+        return;
+      }
+
+      bundleCodeList.forEach(bundleCode => {
+        const { packageInformation, bundledPackageCode } = bundleCode;
+
+        if (packageList[packageInformation.split(" ")[0]]) {
+          return;
+        }
+
+        const packageBlob = new Blob([bundledPackageCode], {
+          type: "application/javascript",
+        });
+
+        const packageBlobURL = URL.createObjectURL(packageBlob);
+        const packageScriptEl = document.createElement("script");
+
+        packageScriptEl.src = packageBlobURL;
+        document.body.append(packageScriptEl);
+
+        setPackage(packageInformation);
+      });
+
+      setUserCode(targetCode);
+      setIsModalOpen(false);
+    } catch (err) {
+      setIsModalOpen(false);
+
+      console.log(err);
     }
-
-    setUserCode(requestResult.content);
   }
 
   useEffect(() => {
@@ -54,12 +101,22 @@ function MDXEditor({ setPreview }) {
   }
 
   return (
-    <EditorContainer className="editor">
-      <EditorInner className="editor-inner">
-        <EditorWrite handleChange={updateUserCode} value={userCode} />
-        <EditorView userCode={userCode} />
-      </EditorInner>
-    </EditorContainer>
+    <>
+      {isModalOpen && (
+        <Modal>
+          <Loading
+            className="package-install-loading"
+            text="Installing the requested library,\nplease wait a moment!"
+          />
+        </Modal>
+      )}
+      <EditorContainer className="editor">
+        <EditorInner className="editor-inner">
+          <EditorWrite handleChange={updateUserCode} value={userCode} />
+          <EditorView userCode={userCode} />
+        </EditorInner>
+      </EditorContainer>
+    </>
   );
 }
 
