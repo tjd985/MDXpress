@@ -1,6 +1,6 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
-async function saveCurrentCode(code, id) {
+async function saveCurrentCode(code, id, packageList) {
   try {
     const requestURL = `${SERVER_DOMAIN}/id/${id === ":id" ? "first" : id}`;
 
@@ -11,6 +11,7 @@ async function saveCurrentCode(code, id) {
       },
       body: JSON.stringify({
         code,
+        packageList,
       }),
       credentials: "include",
     });
