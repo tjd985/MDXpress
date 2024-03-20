@@ -9,19 +9,23 @@ import EditorWrite from "../EditorWrite";
 import ErrorFallback from "../shared/ErrorFallback";
 import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
+import Button from "../shared/Button/Button";
 
 import getVersionCode from "../../services/getVersionCode";
 
 import usePackageStore from "../../store/packageList";
 
 function MDXEditor({ setPreview }) {
-  const [userCode, setUserCode] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, version } = useParams();
+
+  const [userCode, setUserCode] = useState("");
+  const [editorMode, setEditorMode] = useState("code");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const setPackage = usePackageStore(state => state.setPackage);
   const packageList = usePackageStore(state => state.packageList);
 
-  const compileToJs = async () => {
+  async function compileToJs() {
     try {
       const compiledCode = await compile(userCode, {
         outputFormat: "function-body",
@@ -34,7 +38,7 @@ function MDXEditor({ setPreview }) {
     } catch (error) {
       setPreview(<ErrorFallback error={error} />);
     }
-  };
+  }
 
   async function setBoilerPlateCode(id, version) {
     setIsModalOpen(true);
@@ -97,7 +101,11 @@ function MDXEditor({ setPreview }) {
   }, [userCode]);
 
   function updateUserCode(ev) {
-    setUserCode(ev.target.value);
+    if (editorMode === "code") {
+      setUserCode(ev.target.value);
+
+      return;
+    }
   }
 
   return (
@@ -111,14 +119,48 @@ function MDXEditor({ setPreview }) {
         </Modal>
       )}
       <EditorContainer className="editor">
+        <ButtonWrapper className="button-wrapper">
+          <Button
+            className="code-mode"
+            handleClick={() => {
+              setEditorMode("code");
+            }}
+          >
+            code
+          </Button>
+          <Button
+            className="package-mode"
+            handleClick={() => {
+              setEditorMode("package");
+            }}
+          >
+            package
+          </Button>
+        </ButtonWrapper>
         <EditorInner className="editor-inner">
-          <EditorWrite handleChange={updateUserCode} value={userCode} />
-          <EditorView userCode={userCode} />
+          <EditorWrite
+            handleChange={updateUserCode}
+            value={
+              editorMode === "code" ? userCode : JSON.stringify(packageList)
+            }
+          />
+          <EditorView
+            userCode={
+              editorMode === "code" ? userCode : JSON.stringify(packageList)
+            }
+          />
         </EditorInner>
       </EditorContainer>
     </>
   );
 }
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+`;
 
 const EditorContainer = styled.section`
   box-sizing: border-box;
@@ -128,7 +170,7 @@ const EditorContainer = styled.section`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 50vh;
+  min-height: 100%;
 `;
 
 const EditorInner = styled.div`
@@ -139,8 +181,8 @@ const EditorInner = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 70vh;
-  margin: 10px;
+  height: 100%;
+  margin: 0 10px 10px 10px;
 
   background-color: #1c1d21;
   color: white;
