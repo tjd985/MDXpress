@@ -6,6 +6,8 @@ import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
 import Completion from "../shared/Completion";
 
+import usePackageStore from "../../store/packageList";
+
 import saveCurrentCode from "../../services/saveCurrentCode";
 import CONSTANTS from "../../constants/constants";
 
@@ -15,10 +17,13 @@ const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
 const CLIENT_URL = import.meta.env.VITE_CLIENT_URL;
 
 function EditorWrite({ handleChange, value }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-  const currentURL = `${CLIENT_URL}${useLocation().pathname}`;
+  const [modalStatus, setModaStatus] = useState({
+    isModalOpen: false,
+    isSaved: false,
+  });
+  const packageList = usePackageStore(state => state.packageList);
 
+  const currentURL = `${CLIENT_URL}${useLocation().pathname}`;
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -34,18 +39,27 @@ function EditorWrite({ handleChange, value }) {
     if (KEYBOARD_STATUS[KEY_CMD] && KEYBOARD_STATUS[KEY_S]) {
       ev.preventDefault();
 
-      setIsModalOpen(true);
+      setModaStatus({
+        isModalOpen: true,
+        isSaved: false,
+      });
 
       const currentCode = ev.target.value;
-      const requestResult = await saveCurrentCode(currentCode, id);
+      const requestResult = await saveCurrentCode(currentCode, id, packageList);
 
       if (requestResult.result === "Error") {
-        setIsModalOpen(false);
+        setModaStatus({
+          isModalOpen: true,
+          isSaved: false,
+        });
 
         return;
       }
 
-      setIsSaved(true);
+      setModaStatus({
+        isModalOpen: true,
+        isSaved: true,
+      });
 
       KEYBOARD_STATUS[KEY_CMD] = false;
       KEYBOARD_STATUS[KEY_S] = false;
@@ -64,16 +78,18 @@ function EditorWrite({ handleChange, value }) {
 
   return (
     <>
-      {isModalOpen && (
+      {modalStatus.isModalOpen && (
         <Modal>
-          {isSaved ? (
+          {modalStatus.isSaved ? (
             <Completion
               title="The save is complete!"
               description="Try sharing the link with your colleagues!"
               imageSrc={completeImage}
               handleClick={() => {
-                setIsSaved(false);
-                setIsModalOpen(false);
+                setModaStatus({
+                  isModalOpen: false,
+                  isSaved: false,
+                });
               }}
               linkURL={currentURL}
             />
