@@ -31,9 +31,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: flex-end;
   width: 100%;
-  height: 70vh;
+  height: 100%;
   padding: 20px;
 `;
 

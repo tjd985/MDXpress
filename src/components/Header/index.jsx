@@ -88,7 +88,7 @@ function Header() {
 }
 
 const LogoImage = styled.img`
-  width: 100px;
+  width: 80px;
   margin: 0 0 20px 0;
 `;
 

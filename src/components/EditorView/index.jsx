@@ -34,7 +34,7 @@ const CustomEditorView = styled.div`
   box-sizing: border-box;
   flex-grow: 1;
   width: 100%;
-  height: 70vh;
+  min-height: 70vh;
   padding: 10px;
 
   font-size: 1rem;

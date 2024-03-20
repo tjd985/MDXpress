@@ -10,7 +10,6 @@ import usePackageStore from "../../store/packageList";
 
 import saveCurrentCode from "../../services/saveCurrentCode";
 import CONSTANTS from "../../constants/constants";
-
 import completeImage from "../../../assets/complete.jpeg";
 
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
@@ -116,7 +115,7 @@ const CustomEditorWrite = styled.textarea`
   box-sizing: border-box;
   flex-grow: 1;
   width: 100%;
-  height: 70vh;
+  height: 100%;
   padding: 10px;
 
   color: transparent;
@@ -129,6 +128,7 @@ const CustomEditorWrite = styled.textarea`
   line-height: 20px;
   tab-size: 2;
   caret-color: orange;
+  overflow: hidden;
 `;
 
 export default EditorWrite;
