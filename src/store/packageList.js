@@ -12,14 +12,14 @@ function packageStore(set) {
           [packageName]: version,
         };
 
-        return state;
+        return { ...state };
       });
     },
     clearPackageList: () => {
       set(state => {
         state.packageList = {};
 
-        return state;
+        return { ...state };
       });
     },
   };
