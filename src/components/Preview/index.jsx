@@ -26,7 +26,7 @@ const Container = styled.section`
   min-height: 70vh;
   border: 1px solid #000;
   padding: 10px;
-  margin: 10px;
+  margin: 35px 10px 10px 10px;
 `;
 
 export default Preview;
