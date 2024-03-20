@@ -4,14 +4,17 @@ import styled from "styled-components";
 import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
 
+import usePackageStore from "../../store/packageList";
+
 import getBundlePackageCode from "../../services/getBundleCode";
 import CONSTANTS from "../../constants/constants";
 
 import MDXpressLogo from "../../../assets/MDXpress-logo.png";
 
 function Header() {
-  const [packageBlob, setPackageBlob] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [packageBlob, setPackageBlob] = useState(null);
+  const setPackage = usePackageStore(state => state.setPackage);
 
   useEffect(() => {
     if (!packageBlob) {
@@ -25,6 +28,7 @@ function Header() {
     document.body.append(packageScriptEl);
 
     setIsModalOpen(false);
+    setPackageBlob(null);
   }, [packageBlob]);
 
   async function handleSubmit(ev) {
@@ -43,10 +47,12 @@ function Header() {
         return;
       }
 
-      const bundlePackageCode = requestResult.content;
+      const { packageInformation, bundledPackageCode } = requestResult.content;
+
+      setPackage(packageInformation);
 
       setPackageBlob(
-        new Blob([bundlePackageCode], {
+        new Blob([bundledPackageCode], {
           type: "application/javascript",
         }),
       );
@@ -61,7 +67,10 @@ function Header() {
     <>
       {isModalOpen && (
         <Modal>
-          <Loading text="Installing the requested library,\nplease wait a moment!" />
+          <Loading
+            className="package-install-loading"
+            text="Installing the requested library,\nplease wait a moment!"
+          />
         </Modal>
       )}
       <CustomedHeader>
