@@ -32,7 +32,6 @@ function EditorView({ userCode }) {
 
 const CustomEditorView = styled.div`
   box-sizing: border-box;
-  flex-grow: 1;
   width: 100%;
   min-height: 70vh;
   padding: 10px;
@@ -41,8 +40,8 @@ const CustomEditorView = styled.div`
   font-family: "Courier New", Courier, monospace;
   line-height: 20px;
   letter-spacing: normal;
-  white-space: pre-wrap;
-  tab-size: 2;
+  white-space: pre;
+  overflow: auto;
 `;
 
 export default EditorView;
