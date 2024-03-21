@@ -123,11 +123,11 @@ function EditorWrite({ handleChange, setLineNumber, value }) {
 const CustomEditorWrite = styled.textarea`
   position: absolute;
   top: 0;
-  left: 20px;
+  left: 30px;
 
   box-sizing: border-box;
   flex-grow: 1;
-  width: calc(100% - 20px);
+  width: calc(100% - 30px);
   height: 100%;
   padding: 10px;
   border: none;

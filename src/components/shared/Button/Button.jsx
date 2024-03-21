@@ -14,15 +14,21 @@ const CustomButton = styled.button`
   align-items: center;
   width: 120px;
   height: 35px;
-  margin: 0;
+  margin: 0 2px 0 0;
   padding: 10px;
-  border: 1px solid #fff;
-  border-radius: 3px;
+  border: none;
+  border-radius: 10px 10px 0 0;
 
   font-size: 1rem;
   font-weight: bold;
   background-color: #616264;
   color: #fff;
+  cursor: pointer;
+
+  &:active {
+    background-color: #1c1d21;
+    color: #fff;
+  }
 `;
 
 export default Button;
