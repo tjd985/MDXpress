@@ -7,6 +7,7 @@ import Loading from "../shared/Loading";
 import Completion from "../shared/Completion";
 
 import usePackageStore from "../../store/packageList";
+import useScrollStore from "../../store/scroll";
 
 import saveCurrentCode from "../../services/saveCurrentCode";
 import CONSTANTS from "../../constants/constants";
@@ -20,11 +21,19 @@ function EditorWrite({ handleChange, setLineNumber, value }) {
     isModalOpen: false,
     isSaved: false,
   });
-  const packageList = usePackageStore(state => state.packageList);
-
   const currentURL = `${CLIENT_URL}${useLocation().pathname}`;
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const packageList = usePackageStore(state => state.packageList);
+  const setScroll = useScrollStore(state => state.setScroll);
+
+  function handleScroll(ev) {
+    setScroll({
+      left: ev.target.scrollLeft,
+      top: ev.target.scrollLeft,
+    });
+  }
 
   async function handleKeyDown(ev) {
     if (ev.type === "keydown") {
@@ -100,6 +109,7 @@ function EditorWrite({ handleChange, setLineNumber, value }) {
         </Modal>
       )}
       <CustomEditorWrite
+        onScroll={handleScroll}
         className="editor-write"
         onChange={handleChange}
         onKeyDown={handleKeyDown}

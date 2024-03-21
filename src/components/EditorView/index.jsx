@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import * as JSXRuntime from "react/jsx-runtime";
@@ -7,8 +7,13 @@ import { createStarryNight, all } from "@wooorm/starry-night";
 import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";
 
+import useScrollStore from "../../store/scroll";
+
 function EditorView({ userCode }) {
   const [starryNight, setStarryNight] = useState("");
+  const viewRef = useRef(null);
+
+  const { left, top } = useScrollStore(state => state.scroll);
 
   async function generageStarryNight() {
     setStarryNight(await createStarryNight(all));
@@ -18,9 +23,14 @@ function EditorView({ userCode }) {
     generageStarryNight();
   }, []);
 
+  useEffect(() => {
+    viewRef.current.scrollLeft = left;
+    viewRef.current.scrollTop = top;
+  }, [left, top]);
+
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <CustomEditorView className="editor-view">
+      <CustomEditorView className="editor-view" ref={viewRef}>
         {starryNight &&
           toJsxRuntime(starryNight.highlight(userCode, "source.mdx"), {
             ...JSXRuntime,
