@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -21,6 +21,9 @@ function MDXEditor({ setPreview }) {
   const [userCode, setUserCode] = useState("");
   const [editorMode, setEditorMode] = useState("code");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lineNumber, setLineNumber] = useState(1);
+
+  const lineNumberRef = useRef(null);
 
   const setPackage = usePackageStore(state => state.setPackage);
   const packageList = usePackageStore(state => state.packageList);
@@ -90,6 +93,14 @@ function MDXEditor({ setPreview }) {
     }
   }
 
+  function updateUserCode(ev) {
+    if (editorMode === "code") {
+      setUserCode(ev.target.value);
+
+      return;
+    }
+  }
+
   useEffect(() => {
     setBoilerPlateCode(id, version);
   }, [id, version]);
@@ -100,13 +111,11 @@ function MDXEditor({ setPreview }) {
     return;
   }, [userCode]);
 
-  function updateUserCode(ev) {
-    if (editorMode === "code") {
-      setUserCode(ev.target.value);
-
-      return;
-    }
-  }
+  useEffect(() => {
+    lineNumberRef.current.innerHTML = Array(lineNumber)
+      .fill("<span></span>")
+      .join("");
+  }, [lineNumber]);
 
   return (
     <>
@@ -138,8 +147,12 @@ function MDXEditor({ setPreview }) {
           </Button>
         </ButtonWrapper>
         <EditorInner className="editor-inner">
+          <LineNumbers className="line-numbers" ref={lineNumberRef}>
+            <span></span>
+          </LineNumbers>
           <EditorWrite
             handleChange={updateUserCode}
+            setLineNumber={setLineNumber}
             value={
               editorMode === "code" ? userCode : JSON.stringify(packageList)
             }
@@ -155,13 +168,6 @@ function MDXEditor({ setPreview }) {
   );
 }
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-`;
-
 const EditorContainer = styled.section`
   box-sizing: border-box;
 
@@ -169,8 +175,15 @@ const EditorContainer = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 50%;
   min-height: 100%;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
 `;
 
 const EditorInner = styled.div`
@@ -179,13 +192,37 @@ const EditorInner = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   height: 100%;
   margin: 0 10px 10px 10px;
 
   background-color: #1c1d21;
   color: white;
+`;
+
+const LineNumbers = styled.div`
+  width: 20px;
+  padding-top: 10px;
+
+  text-align: right;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  letter-spacing: normal;
+  line-height: 20px;
+
+  span {
+    counter-increment: lineNumber;
+  }
+
+  span::before {
+    content: counter(lineNumber);
+    display: block;
+
+    color: #506882;
+  }
 `;
 
 export default MDXEditor;

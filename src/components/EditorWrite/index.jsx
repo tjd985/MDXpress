@@ -15,7 +15,7 @@ import completeImage from "../../../assets/complete.jpeg";
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
 const CLIENT_URL = import.meta.env.VITE_CLIENT_URL;
 
-function EditorWrite({ handleChange, value }) {
+function EditorWrite({ handleChange, setLineNumber, value }) {
   const [modalStatus, setModaStatus] = useState({
     isModalOpen: false,
     isSaved: false,
@@ -33,6 +33,8 @@ function EditorWrite({ handleChange, value }) {
 
     if (ev.type === "keyup") {
       KEYBOARD_STATUS[ev.keyCode] = false;
+
+      setLineNumber(ev.target.value.split("\n").length);
     }
 
     if (KEYBOARD_STATUS[KEY_CMD] && KEYBOARD_STATUS[KEY_S]) {
@@ -111,24 +113,29 @@ function EditorWrite({ handleChange, value }) {
 const CustomEditorWrite = styled.textarea`
   position: absolute;
   top: 0;
+  left: 20px;
 
   box-sizing: border-box;
   flex-grow: 1;
-  width: 100%;
+  width: calc(100% - 20px);
   height: 100%;
   padding: 10px;
+  border: none;
 
   color: transparent;
   background-color: transparent;
   font-size: 1rem;
   font-weight: bold;
   font-family: "Courier New", Courier, monospace;
-  white-space: pre-wrap;
+  white-space: pre;
   letter-spacing: normal;
   line-height: 20px;
-  tab-size: 2;
   caret-color: orange;
-  overflow: hidden;
+  overflow: auto;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default EditorWrite;
