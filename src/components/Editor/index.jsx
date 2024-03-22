@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { compile, run } from "@mdx-js/mdx";
+import styled from "styled-components";
 
 import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
@@ -10,12 +10,13 @@ import ErrorFallback from "../shared/ErrorFallback";
 import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
 import Button from "../shared/Button/Button";
+import Toast from "../shared/Toast";
+
+import usePackageStore from "../../store/packageList";
 
 import useLoadPackage from "../../hooks/useLoadPackage";
 
 import getVersionCode from "../../services/getVersionCode";
-
-import usePackageStore from "../../store/packageList";
 
 function MDXEditor({ setPreview }) {
   const { id, version } = useParams();
@@ -24,6 +25,10 @@ function MDXEditor({ setPreview }) {
   const [editorMode, setEditorMode] = useState("code");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [lineNumber, setLineNumber] = useState(1);
+  const [toast, setToast] = useState({
+    status: false,
+    message: "",
+  });
   const loadPackage = useLoadPackage();
 
   const lineNumberRef = useRef(null);
@@ -56,6 +61,7 @@ function MDXEditor({ setPreview }) {
 
       if (requestResult.result === "Error") {
         setIsModalOpen(false);
+        setToast({ status: true, message: requestResult.message });
 
         return;
       }
@@ -107,6 +113,9 @@ function MDXEditor({ setPreview }) {
 
   return (
     <>
+      {toast.status && (
+        <Toast setToast={setToast} toastMessage={toast.message} />
+      )}
       {isModalOpen && (
         <Modal>
           <Loading
@@ -181,7 +190,7 @@ const EditorInner = styled.div`
   margin: 0 10px 10px 10px;
 
   background-color: #1c1d21;
-  color: white;
+  color: #ffffff;
 `;
 
 const LineNumbers = styled.div`

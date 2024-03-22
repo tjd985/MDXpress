@@ -3,17 +3,21 @@ import styled from "styled-components";
 
 import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
+import Toast from "../shared/Toast";
 
 import usePackageStore from "../../store/packageList";
 
 import getBundlePackageCode from "../../services/getBundleCode";
 import CONSTANTS from "../../constants/constants";
-
 import MDXpressLogo from "../../../assets/MDXpress-logo.png";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [packageBlob, setPackageBlob] = useState(null);
+  const [toast, setToast] = useState({
+    status: false,
+    message: "",
+  });
   const setPackage = usePackageStore(state => state.setPackage);
 
   useEffect(() => {
@@ -40,9 +44,8 @@ function Header() {
       const requestResult = await getBundlePackageCode(ev.target.value);
 
       if (requestResult.result === "Error") {
-        console.log(requestResult.message);
-
         setIsModalOpen(false);
+        setToast({ status: true, message: requestResult.message });
 
         return;
       }
@@ -65,6 +68,9 @@ function Header() {
 
   return (
     <>
+      {toast.status && (
+        <Toast setToast={setToast} toastMessage={toast.message} />
+      )}
       {isModalOpen && (
         <Modal>
           <Loading
