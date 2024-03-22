@@ -11,6 +11,8 @@ import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
 import Button from "../shared/Button/Button";
 
+import useLoadPackage from "../../hooks/useLoadPackage";
+
 import getVersionCode from "../../services/getVersionCode";
 
 import usePackageStore from "../../store/packageList";
@@ -22,10 +24,10 @@ function MDXEditor({ setPreview }) {
   const [editorMode, setEditorMode] = useState("code");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [lineNumber, setLineNumber] = useState(1);
+  const loadPackage = useLoadPackage();
 
   const lineNumberRef = useRef(null);
 
-  const setPackage = usePackageStore(state => state.setPackage);
   const packageList = usePackageStore(state => state.packageList);
 
   async function compileToJs() {
@@ -60,30 +62,13 @@ function MDXEditor({ setPreview }) {
       if (!bundleCodeList.length) {
         setUserCode(targetCode);
         setLineNumber(targetCode.split("\n").length);
+
         setIsModalOpen(false);
 
         return;
       }
 
-      bundleCodeList.forEach(bundleCode => {
-        const { packageInformation, bundledPackageCode } = bundleCode;
-
-        if (packageList[packageInformation.split(" ")[0]]) {
-          return;
-        }
-
-        const packageBlob = new Blob([bundledPackageCode], {
-          type: "application/javascript",
-        });
-
-        const packageBlobURL = URL.createObjectURL(packageBlob);
-        const packageScriptEl = document.createElement("script");
-
-        packageScriptEl.src = packageBlobURL;
-        document.body.append(packageScriptEl);
-
-        setPackage(packageInformation);
-      });
+      loadPackage(bundleCodeList);
 
       setUserCode(targetCode);
       setLineNumber(targetCode.split("\n").length);
