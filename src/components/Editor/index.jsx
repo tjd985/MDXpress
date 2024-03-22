@@ -151,7 +151,7 @@ function MDXEditor({ setPreview }) {
             <span></span>
           </LineNumbers>
           <EditorWrite
-            handleChange={updateUserCode}
+            updateUserCode={updateUserCode}
             setLineNumber={setLineNumber}
             value={
               editorMode === "code" ? userCode : JSON.stringify(packageList)
