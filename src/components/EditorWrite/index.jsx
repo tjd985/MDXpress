@@ -16,7 +16,7 @@ import completeImage from "../../../assets/complete.jpeg";
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
 const CLIENT_URL = import.meta.env.VITE_CLIENT_URL;
 
-function EditorWrite({ updateUserCode, setLineNumber, value }) {
+function EditorWrite({ updateUserCode, setLineNumber, textAreaValue }) {
   const [modalStatus, setModaStatus] = useState({
     isModalOpen: false,
     isSaved: false,
@@ -136,7 +136,7 @@ function EditorWrite({ updateUserCode, setLineNumber, value }) {
         onChange={updateUserCode}
         onKeyDown={handleKeyPress}
         onKeyUp={handleKeyPress}
-        value={value}
+        value={textAreaValue}
       />
     </>
   );
