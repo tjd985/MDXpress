@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import styled from "styled-components";
-import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import * as JSXRuntime from "react/jsx-runtime";
+import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { createStarryNight, all } from "@wooorm/starry-night";
+import styled from "styled-components";
 
 import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";

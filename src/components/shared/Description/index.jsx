@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { nanoid } from "nanoid";
+import styled from "styled-components";
 
 function Description({ className, text }) {
   return (
