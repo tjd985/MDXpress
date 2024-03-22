@@ -59,6 +59,7 @@ function MDXEditor({ setPreview }) {
 
       if (!bundleCodeList.length) {
         setUserCode(targetCode);
+        setLineNumber(targetCode.split("\n").length);
         setIsModalOpen(false);
 
         return;
@@ -85,6 +86,7 @@ function MDXEditor({ setPreview }) {
       });
 
       setUserCode(targetCode);
+      setLineNumber(targetCode.split("\n").length);
       setIsModalOpen(false);
     } catch (err) {
       setIsModalOpen(false);
