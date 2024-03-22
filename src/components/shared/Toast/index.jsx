@@ -40,13 +40,13 @@ const ToastPopup = styled.div`
   justify-content: center;
   align-items: center;
   width: 30%;
-  height: 150px;
+  height: 60px;
   border-radius: 10px;
   z-index: 2;
 
   font-size: 1.5rem;
   color: #fff;
-  background-color: #696969;
+  background-color: #cd5c5c;
   text-align: center;
   animation: ${fadeInUp} 1s ease-in-out;
 `;

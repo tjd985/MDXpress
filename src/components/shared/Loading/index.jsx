@@ -15,6 +15,19 @@ function Loading({ className, text }) {
   );
 }
 
+const slideAnimation = keyframes`
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+`;
+
 const Wrapper = styled.div`
   width: 400px;
   height: 200px;
@@ -45,19 +58,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const flow = keyframes`
-  0%,
-  100% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-`;
-
 const DotWrapper = styled.div`
   margin-bottom: 30px;
 
@@ -72,7 +72,7 @@ const Dot = styled.span`
   margin: 10px;
 
   background-color: grey;
-  animation: ${flow} 1s linear infinite;
+  animation: ${slideAnimation} 1s linear infinite;
 `;
 
 export default Loading;

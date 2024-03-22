@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   margin-bottom: 20px;
 
-  color: #000;
+  color: #000000;
 `;
 
 const CompleteImage = styled.img`
@@ -47,7 +47,7 @@ const LinkSection = styled.div`
   margin-top: 20px;
 
   text-align: center;
-  color: #000;
+  color: #000000;
 
   em {
     display: block;

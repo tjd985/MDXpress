@@ -22,12 +22,12 @@ const CustomButton = styled.button`
   font-size: 1rem;
   font-weight: bold;
   background-color: #616264;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
 
   &:active {
     background-color: #1c1d21;
-    color: #fff;
+    color: #ffffff;
   }
 `;
 

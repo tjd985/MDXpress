@@ -23,7 +23,7 @@ const Container = styled.section`
   align-items: flex-start;
   width: 50%;
   min-height: 70vh;
-  border: 1px solid #000;
+  border: 1px solid #000000;
   padding: 10px;
   margin: 35px 10px 10px 10px;
 `;
