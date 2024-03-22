@@ -16,7 +16,7 @@ import completeImage from "../../../assets/complete.jpeg";
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
 const CLIENT_URL = import.meta.env.VITE_CLIENT_URL;
 
-function EditorWrite({ updateUserCode, setLineNumber, textAreaValue }) {
+function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
   const [modalStatus, setModaStatus] = useState({
     isModalOpen: false,
     isSaved: false,
@@ -39,28 +39,28 @@ function EditorWrite({ updateUserCode, setLineNumber, textAreaValue }) {
   }
 
   async function handleKeyPress(ev) {
-    if (ev.type === "keydown") {
-      KEYBOARD_STATUS[ev.keyCode] = true;
-
-      if (ev.keyCode === CONSTANTS.KEY_TAB) {
-        ev.preventDefault();
-
-        const start = ev.target.selectionStart;
-        const editedText = `${ev.target.value.slice(0, start)}  ${ev.target.value.slice(start)}`;
-
-        ev.target.value = editedText;
-
-        updateUserCode(ev);
-        setCursor(start + 2);
-
-        return;
-      }
-    }
+    setLineNumber(ev.target.value.split("\n").length);
 
     if (ev.type === "keyup") {
       KEYBOARD_STATUS[ev.keyCode] = false;
 
-      setLineNumber(ev.target.value.split("\n").length);
+      return;
+    }
+
+    KEYBOARD_STATUS[ev.keyCode] = true;
+
+    if (ev.keyCode === CONSTANTS.KEY_TAB) {
+      ev.preventDefault();
+
+      const start = ev.target.selectionStart;
+      const editedText = `${ev.target.value.slice(0, start)}  ${ev.target.value.slice(start)}`;
+
+      ev.target.value = editedText;
+
+      updateUserCode(ev);
+      setCursor(start + 2);
+
+      return;
     }
 
     if (KEYBOARD_STATUS[KEY_CMD] && KEYBOARD_STATUS[KEY_S]) {
@@ -71,12 +71,11 @@ function EditorWrite({ updateUserCode, setLineNumber, textAreaValue }) {
         isSaved: false,
       });
 
-      const currentCode = ev.target.value;
-      const requestResult = await saveCurrentCode(currentCode, id, packageList);
+      const requestResult = await saveCurrentCode(userCode, id, packageList);
 
       if (requestResult.result === "Error") {
         setModaStatus({
-          isModalOpen: true,
+          isModalOpen: false,
           isSaved: false,
         });
 
@@ -107,6 +106,10 @@ function EditorWrite({ updateUserCode, setLineNumber, textAreaValue }) {
     textAreaRef.current.setSelectionRange(cursor, cursor);
   }, [cursor]);
 
+  useEffect(() => {
+    setLineNumber(textAreaRef.current.value.split("\n").length);
+  }, [currentMode]);
+
   return (
     <>
       {modalStatus.isModalOpen && (
@@ -136,7 +139,7 @@ function EditorWrite({ updateUserCode, setLineNumber, textAreaValue }) {
         onChange={updateUserCode}
         onKeyDown={handleKeyPress}
         onKeyUp={handleKeyPress}
-        value={textAreaValue}
+        value={currentMode === "code" ? userCode : JSON.stringify(packageList)}
       />
     </>
   );

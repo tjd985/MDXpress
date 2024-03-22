@@ -8,12 +8,14 @@ import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";
 
 import useScrollStore from "../../store/scroll";
+import usePackageStore from "../../store/packageList";
 
-function EditorView({ userCode }) {
+function EditorView({ userCode, currentMode }) {
   const [starryNight, setStarryNight] = useState("");
   const viewRef = useRef(null);
 
   const { left, top } = useScrollStore(state => state.scroll);
+  const packageList = usePackageStore(state => state.packageList);
 
   async function generageStarryNight() {
     setStarryNight(await createStarryNight(all));
@@ -32,9 +34,15 @@ function EditorView({ userCode }) {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <CustomEditorView className="editor-view" ref={viewRef}>
         {starryNight &&
-          toJsxRuntime(starryNight.highlight(userCode, "source.mdx"), {
-            ...JSXRuntime,
-          })}
+          toJsxRuntime(
+            starryNight.highlight(
+              currentMode === "code" ? userCode : JSON.stringify(packageList),
+              "source.mdx",
+            ),
+            {
+              ...JSXRuntime,
+            },
+          )}
       </CustomEditorView>
     </ErrorBoundary>
   );

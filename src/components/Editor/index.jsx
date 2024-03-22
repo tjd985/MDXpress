@@ -32,10 +32,13 @@ function MDXEditor({ setPreview }) {
 
   async function compileToJs() {
     try {
-      const compiledCode = await compile(userCode, {
-        outputFormat: "function-body",
-        baseUrl: "/Users/ohseongho/Desktop/MDXpress/node_modules",
-      });
+      const compiledCode = await compile(
+        editorMode === "code" ? userCode : JSON.stringify(packageList),
+        {
+          outputFormat: "function-body",
+          baseUrl: "/Users/ohseongho/Desktop/MDXpress/node_modules",
+        },
+      );
       const result = await run(compiledCode.value, jsxRuntime);
       const MDXContent = result.default;
 
@@ -100,7 +103,7 @@ function MDXEditor({ setPreview }) {
     lineNumberRef.current.innerHTML = Array(lineNumber)
       .fill("<span></span>")
       .join("");
-  }, [lineNumber]);
+  }, [lineNumber, editorMode]);
 
   return (
     <>
@@ -138,15 +141,10 @@ function MDXEditor({ setPreview }) {
           <EditorWrite
             updateUserCode={updateUserCode}
             setLineNumber={setLineNumber}
-            textAreavalue={
-              editorMode === "code" ? userCode : JSON.stringify(packageList)
-            }
+            userCode={userCode}
+            currentMode={editorMode}
           />
-          <EditorView
-            userCode={
-              editorMode === "code" ? userCode : JSON.stringify(packageList)
-            }
-          />
+          <EditorView userCode={userCode} currentMode={editorMode} />
         </EditorInner>
       </EditorContainer>
     </>
