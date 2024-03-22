@@ -7,6 +7,7 @@ const CONSTANTS = {
     91: false,
     83: false,
   },
+  TOAST_TIME: 3000,
 };
 
 export default CONSTANTS;
