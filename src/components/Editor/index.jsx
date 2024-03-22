@@ -59,10 +59,10 @@ function MDXEditor({ setPreview }) {
 
       const { targetCode, bundleCodeList } = requestResult.content;
 
-      if (!bundleCodeList.length) {
-        setUserCode(targetCode);
-        setLineNumber(targetCode.split("\n").length);
+      setUserCode(targetCode);
+      setLineNumber(targetCode.split("\n").length);
 
+      if (!bundleCodeList.length) {
         setIsModalOpen(false);
 
         return;
@@ -70,8 +70,6 @@ function MDXEditor({ setPreview }) {
 
       loadPackage(bundleCodeList);
 
-      setUserCode(targetCode);
-      setLineNumber(targetCode.split("\n").length);
       setIsModalOpen(false);
     } catch (err) {
       setIsModalOpen(false);
@@ -140,7 +138,7 @@ function MDXEditor({ setPreview }) {
           <EditorWrite
             updateUserCode={updateUserCode}
             setLineNumber={setLineNumber}
-            value={
+            textAreavalue={
               editorMode === "code" ? userCode : JSON.stringify(packageList)
             }
           />
