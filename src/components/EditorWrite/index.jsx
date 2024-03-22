@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -16,17 +16,20 @@ import completeImage from "../../../assets/complete.jpeg";
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
 const CLIENT_URL = import.meta.env.VITE_CLIENT_URL;
 
-function EditorWrite({ handleChange, setLineNumber, value }) {
+function EditorWrite({ updateUserCode, setLineNumber, value }) {
   const [modalStatus, setModaStatus] = useState({
     isModalOpen: false,
     isSaved: false,
   });
-  const currentURL = `${CLIENT_URL}${useLocation().pathname}`;
+  const [cursor, setCursor] = useState(0);
+  const textAreaRef = useRef();
   const { id } = useParams();
   const navigate = useNavigate();
 
   const packageList = usePackageStore(state => state.packageList);
   const setScroll = useScrollStore(state => state.setScroll);
+
+  const currentURL = `${CLIENT_URL}${useLocation().pathname}`;
 
   function handleScroll(ev) {
     setScroll({
@@ -35,9 +38,23 @@ function EditorWrite({ handleChange, setLineNumber, value }) {
     });
   }
 
-  async function handleKeyDown(ev) {
+  async function handleKeyPress(ev) {
     if (ev.type === "keydown") {
       KEYBOARD_STATUS[ev.keyCode] = true;
+
+      if (ev.keyCode === CONSTANTS.KEY_TAB) {
+        ev.preventDefault();
+
+        const start = ev.target.selectionStart;
+        const editedText = `${ev.target.value.slice(0, start)}  ${ev.target.value.slice(start)}`;
+
+        ev.target.value = editedText;
+
+        updateUserCode(ev);
+        setCursor(start + 2);
+
+        return;
+      }
     }
 
     if (ev.type === "keyup") {
@@ -86,6 +103,10 @@ function EditorWrite({ handleChange, setLineNumber, value }) {
     }
   }
 
+  useEffect(() => {
+    textAreaRef.current.setSelectionRange(cursor, cursor);
+  }, [cursor]);
+
   return (
     <>
       {modalStatus.isModalOpen && (
@@ -109,11 +130,12 @@ function EditorWrite({ handleChange, setLineNumber, value }) {
         </Modal>
       )}
       <CustomEditorWrite
+        ref={textAreaRef}
         onScroll={handleScroll}
         className="editor-write"
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyDown}
+        onChange={updateUserCode}
+        onKeyDown={handleKeyPress}
+        onKeyUp={handleKeyPress}
         value={value}
       />
     </>
