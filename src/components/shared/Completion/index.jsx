@@ -16,7 +16,7 @@ function Completion({
       <Description text={description} />
       {linkURL && (
         <LinkSection>
-          your Link <em>{linkURL}</em>
+          🔗 your Link is <em>{linkURL}</em>
         </LinkSection>
       )}
       <CloseButton onClick={handleClick}>Okay</CloseButton>
@@ -33,8 +33,9 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  margin-bottom: 20px;
+  margin: 0;
 
+  font-style: italic;
   color: #000000;
 `;
 
@@ -45,17 +46,24 @@ const CompleteImage = styled.img`
 
 const LinkSection = styled.div`
   margin-top: 20px;
+  border-radius: 10px;
 
+  font-weight: bold;
+  font-size: 1.2rem;
+  line-height: 2rem;
   text-align: center;
   color: #000000;
 
   em {
     display: block;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 10px;
 
     background-color: #f0e68c;
+    font-size: 1rem;
     font-weight: bold;
+    font-style: normal;
   }
 `;
 
@@ -65,7 +73,7 @@ const CloseButton = styled.button`
   padding: 12px 24px;
   border: 2px solid #000000;
   border-radius: 4px;
-  margin-top: 50px;
+  margin-top: 30px;
 
   font-size: 1rem;
   font-weight: bold;
