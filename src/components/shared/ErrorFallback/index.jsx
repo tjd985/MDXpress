@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 function ErrorFallback({ error }) {
   return (
@@ -15,5 +16,9 @@ const ErrorMessage = styled.div`
 
   white-space: pre-wrap;
 `;
+
+ErrorFallback.propTypes = {
+  error: PropTypes.instanceOf(Error).isRequired,
+};
 
 export default ErrorFallback;

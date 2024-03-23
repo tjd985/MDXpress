@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import Description from "../shared/Description";
 
@@ -48,5 +49,9 @@ const CloseButton = styled.button`
   font-weight: bold;
   cursor: pointer;
 `;
+
+Welcome.propTypes = {
+  setModalStatus: PropTypes.func.isRequired,
+};
 
 export default Welcome;

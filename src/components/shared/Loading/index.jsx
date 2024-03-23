@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import PropTypes from "prop-types";
 
 import Description from "../Description";
 
@@ -74,5 +75,10 @@ const Dot = styled.span`
   background-color: grey;
   animation: ${slideAnimation} 1s linear infinite;
 `;
+
+Loading.propTypes = {
+  className: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 export default Loading;

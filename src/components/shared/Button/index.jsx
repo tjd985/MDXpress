@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 function Button({ className, children, handleClick }) {
   return (
@@ -30,5 +31,11 @@ const CustomButton = styled.button`
     color: #ffffff;
   }
 `;
+
+Button.propTypes = {
+  className: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  handleClick: PropTypes.func.isRequired,
+};
 
 export default Button;

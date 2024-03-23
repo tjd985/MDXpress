@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
@@ -148,11 +149,11 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
 const CustomEditorWrite = styled.textarea`
   position: absolute;
   top: 0;
-  left: 30px;
+  left: 25px;
 
   box-sizing: border-box;
   flex-grow: 1;
-  width: calc(100% - 30px);
+  width: calc(100% - 25px);
   height: 100%;
   padding: 10px;
   border: none;
@@ -176,5 +177,12 @@ const CustomEditorWrite = styled.textarea`
     display: none;
   }
 `;
+
+EditorWrite.propTypes = {
+  updateUserCode: PropTypes.func.isRequired,
+  setLineNumber: PropTypes.func.isRequired,
+  userCode: PropTypes.string.isRequired,
+  currentMode: PropTypes.string.isRequired,
+};
 
 export default EditorWrite;

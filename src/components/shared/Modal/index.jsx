@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 function Modal({ children }) {
   return (
@@ -37,5 +38,9 @@ const ModalContainer = styled.div`
 
   background-color: #ffffff;
 `;
+
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Modal;

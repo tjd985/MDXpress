@@ -3,6 +3,7 @@ import * as JSXRuntime from "react/jsx-runtime";
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { createStarryNight, all } from "@wooorm/starry-night";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";
@@ -65,5 +66,10 @@ const CustomEditorView = styled.div`
     display: none;
   }
 `;
+
+EditorView.propTypes = {
+  userCode: PropTypes.string.isRequired,
+  currentMode: PropTypes.string.isRequired,
+};
 
 export default EditorView;

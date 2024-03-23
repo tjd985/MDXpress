@@ -1,6 +1,7 @@
 import React from "react";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 function Description({ className, text }) {
   return (
@@ -26,5 +27,10 @@ const StyledSpan = styled.span`
   font-weight: 500;
   line-height: 24px;
 `;
+
+Description.propTypes = {
+  className: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 export default Description;

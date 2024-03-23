@@ -3,13 +3,14 @@ import * as jsxRuntime from "react/jsx-runtime";
 import { useParams } from "react-router-dom";
 import { compile, run } from "@mdx-js/mdx";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
 import ErrorFallback from "../shared/ErrorFallback";
 import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
-import Button from "../shared/Button/Button";
+import Button from "../shared/Button";
 import Toast from "../shared/Toast";
 
 import usePackageStore from "../../store/packageList";
@@ -224,5 +225,9 @@ const LineNumbers = styled.div`
     display: none;
   }
 `;
+
+MDXEditor.propTypes = {
+  setPreview: PropTypes.func.isRequired,
+};
 
 export default MDXEditor;

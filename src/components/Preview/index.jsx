@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { nanoid } from "nanoid";
+import PropTypes from "prop-types";
 
 import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";
@@ -37,5 +38,9 @@ const Container = styled.section`
     display: none;
   }
 `;
+
+Preview.propTypes = {
+  previewComponent: PropTypes.node.isRequired,
+};
 
 export default Preview;

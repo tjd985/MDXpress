@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import Description from "../Description";
 
@@ -79,5 +80,13 @@ const CloseButton = styled.button`
   font-weight: bold;
   cursor: pointer;
 `;
+
+Completion.propTypes = {
+  imageSrc: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  linkURL: PropTypes.string.isRequired,
+};
 
 export default Completion;
