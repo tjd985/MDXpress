@@ -196,10 +196,9 @@ const EditorInner = styled.div`
 `;
 
 const LineNumbers = styled.div`
-  box-sizing: border-box;
-  width: fit-content;
   max-height: 100%;
   margin: 10px 0 10px 10px;
+  margin-top: 10px;
 
   text-align: right;
   font-size: 1rem;
@@ -208,15 +207,20 @@ const LineNumbers = styled.div`
   white-space: pre-wrap;
   letter-spacing: normal;
   line-height: 20px;
-  overflow: auto;
+  overflow-y: auto;
 
   span {
+    display: block;
+    width: 20px;
+
     counter-increment: lineNumber;
   }
 
   span::before {
     content: counter(lineNumber);
     display: block;
+    width: 20px;
+    white-space: nowrap;
 
     color: #506882;
   }

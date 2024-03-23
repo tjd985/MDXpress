@@ -149,11 +149,11 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
 const CustomEditorWrite = styled.textarea`
   position: absolute;
   top: 0;
-  left: 25px;
+  left: 30px;
 
   box-sizing: border-box;
   flex-grow: 1;
-  width: calc(100% - 25px);
+  width: calc(100% - 30px);
   height: 100%;
   padding: 10px;
   border: none;
