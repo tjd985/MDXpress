@@ -129,7 +129,10 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
               linkURL={currentURL}
             />
           ) : (
-            <Loading text="Saving your current code.\n Please wait a moment..." />
+            <Loading
+              className="save-loading"
+              text="Saving your current code.\n Please wait a moment..."
+            />
           )}
         </Modal>
       )}

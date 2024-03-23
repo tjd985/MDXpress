@@ -14,7 +14,7 @@ function Completion({
     <Wrapper>
       <Title>{title}</Title>
       <CompleteImage src={imageSrc} alt="complete image" />
-      <Description text={description} />
+      <Description className="complete-description" text={description} />
       {linkURL && (
         <LinkSection>
           🔗 your Link is <em>{linkURL}</em>
