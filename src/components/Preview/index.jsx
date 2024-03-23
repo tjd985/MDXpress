@@ -22,15 +22,20 @@ const Container = styled.section`
   justify-content: flex-start;
   align-items: flex-start;
   width: 50%;
-  min-height: 70vh;
+  height: calc(100% - 35px);
   border: 1px solid #000000;
   padding: 10px;
-  margin: 35px 10px 10px 10px;
+  margin: 35px 10px 0 10px;
   border: 1px solid grey;
   border-radius: 3%;
+  overflow: auto;
 
   background-color: #000000;
   color: #ffffff;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default Preview;

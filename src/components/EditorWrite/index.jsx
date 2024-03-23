@@ -171,6 +171,10 @@ const CustomEditorWrite = styled.textarea`
   &:focus {
     outline: none;
   }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default EditorWrite;

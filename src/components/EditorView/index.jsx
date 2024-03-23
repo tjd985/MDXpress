@@ -51,7 +51,7 @@ function EditorView({ userCode, currentMode }) {
 const CustomEditorView = styled.div`
   box-sizing: border-box;
   width: 100%;
-  min-height: 70vh;
+  height: 100%;
   padding: 10px;
 
   font-size: 1rem;
@@ -60,6 +60,10 @@ const CustomEditorView = styled.div`
   letter-spacing: normal;
   white-space: pre;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default EditorView;

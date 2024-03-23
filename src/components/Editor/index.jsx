@@ -168,7 +168,7 @@ const EditorContainer = styled.section`
   justify-content: center;
   align-items: center;
   width: 50%;
-  min-height: 100%;
+  height: 100%;
   overflow: hidden;
 `;
 
@@ -188,7 +188,6 @@ const EditorInner = styled.div`
   align-items: flex-start;
   width: 100%;
   height: 100%;
-  margin: 0 10px 10px 10px;
   border-radius: 0 3% 3% 3%;
 
   background-color: #1c1d21;
@@ -196,9 +195,10 @@ const EditorInner = styled.div`
 `;
 
 const LineNumbers = styled.div`
-  width: 20px;
-  height: 70vh;
-  padding: 10px 0 0 10px;
+  box-sizing: border-box;
+  width: fit-content;
+  max-height: 100%;
+  margin: 10px 0 10px 10px;
 
   text-align: right;
   font-size: 1rem;
@@ -207,6 +207,7 @@ const LineNumbers = styled.div`
   white-space: pre-wrap;
   letter-spacing: normal;
   line-height: 20px;
+  overflow: auto;
 
   span {
     counter-increment: lineNumber;
@@ -217,6 +218,10 @@ const LineNumbers = styled.div`
     display: block;
 
     color: #506882;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

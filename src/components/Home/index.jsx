@@ -33,8 +33,8 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
-  height: 100%;
-  padding: 20px;
+  height: 80vh;
+  padding: 10px;
 `;
 
 export default Home;
