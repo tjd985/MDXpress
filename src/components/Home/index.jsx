@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import Editor from "../Editor";
@@ -7,8 +8,9 @@ import Modal from "../shared/Modal";
 import Welcome from "../Welcome";
 
 function Home() {
+  const { id } = useParams();
   const [previewComponent, setPreviewComponent] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(id === ":id" || false);
 
   return (
     <>

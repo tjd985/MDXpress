@@ -55,14 +55,14 @@ function MDXEditor({ setPreview }) {
   }
 
   async function setBoilerPlateCode(id, version) {
-    setIsModalOpen(true);
-
     try {
+      setIsModalOpen(id !== ":id" || false);
+
       const requestResult = await getVersionCode(id, version);
 
       if (requestResult.result === "Error") {
-        setIsModalOpen(false);
         setToast({ status: true, message: requestResult.message });
+        setIsModalOpen(false);
 
         return;
       }
@@ -188,7 +188,7 @@ const EditorInner = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 35px);
   border-radius: 0 3% 3% 3%;
 
   background-color: #1c1d21;
