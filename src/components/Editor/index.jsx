@@ -169,6 +169,7 @@ const EditorContainer = styled.section`
   align-items: center;
   width: 50%;
   min-height: 100%;
+  overflow: hidden;
 `;
 
 const ButtonWrapper = styled.div`
@@ -188,6 +189,7 @@ const EditorInner = styled.div`
   width: 100%;
   height: 100%;
   margin: 0 10px 10px 10px;
+  border-radius: 0 3% 3% 3%;
 
   background-color: #1c1d21;
   color: #ffffff;
@@ -195,6 +197,7 @@ const EditorInner = styled.div`
 
 const LineNumbers = styled.div`
   width: 20px;
+  height: 70vh;
   padding: 10px 0 0 10px;
 
   text-align: right;

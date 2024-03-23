@@ -26,6 +26,11 @@ const Container = styled.section`
   border: 1px solid #000000;
   padding: 10px;
   margin: 35px 10px 10px 10px;
+  border: 1px solid grey;
+  border-radius: 3%;
+
+  background-color: #000000;
+  color: #ffffff;
 `;
 
 export default Preview;
