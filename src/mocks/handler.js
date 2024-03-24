@@ -19,6 +19,20 @@ const handlers = [
         },
       });
     }
+
+    return HttpResponse.json({
+      result: "OK",
+      status: 200,
+      content: {
+        targetCode: "saved code",
+        bundleCodeList: [
+          {
+            packageInformation: "lodash 1.0",
+            bundledPackageCode: "bundled package code",
+          },
+        ],
+      },
+    });
   }),
   http.get(requestPackageURL, ({ params }) => {
     const { package: packageName } = params;
