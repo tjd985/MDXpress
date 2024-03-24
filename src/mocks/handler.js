@@ -2,6 +2,7 @@ import { http, HttpResponse } from "msw";
 
 const requestPackageURL = "/package/:package";
 const requestBoilerPlateURL = "/id/:id/version/:version";
+const requestSaveURL = "/id/:id";
 
 const allPackages = ["lodash", "nanoid"];
 
@@ -52,6 +53,18 @@ const handlers = [
       content: {
         packageInformation: "lodash 1.0",
         bundledPackageCode: "bundled package code",
+      },
+    });
+  }),
+  http.post(requestSaveURL, ({ params }) => {
+    const { id } = params;
+
+    return HttpResponse.json({
+      result: "OK",
+      status: 200,
+      content: {
+        latestVersion: "someVersion",
+        temporaryUser: "someUserId",
       },
     });
   }),
