@@ -43,14 +43,14 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
     setLineNumber(ev.target.value.split("\n").length);
 
     if (ev.type === "keyup") {
-      KEYBOARD_STATUS[ev.keyCode] = false;
+      KEYBOARD_STATUS[ev.key] = false;
 
       return;
     }
 
-    KEYBOARD_STATUS[ev.keyCode] = true;
+    KEYBOARD_STATUS[ev.key] = true;
 
-    if (ev.keyCode === CONSTANTS.KEY_TAB) {
+    if (ev.key === "Tab") {
       ev.preventDefault();
 
       const start = ev.target.selectionStart;

@@ -38,7 +38,7 @@ function Header() {
   async function handleSubmit(ev) {
     ev.preventDefault();
 
-    if (ev.keyCode === CONSTANTS.KEY_ENTER) {
+    if (ev.key === CONSTANTS.KEY_ENTER) {
       setIsModalOpen(true);
 
       const requestResult = await getBundlePackageCode(ev.target.value);

@@ -1,11 +1,11 @@
 const CONSTANTS = {
-  KEY_CMD: 91,
-  KEY_S: 83,
-  KEY_ENTER: 13,
-  KEY_TAB: 9,
+  KEY_CMD: "Meta",
+  KEY_S: "s",
+  KEY_ENTER: "Enter",
+  KEY_TAB: "Tab",
   KEYBOARD_STATUS: {
-    91: false,
-    83: false,
+    Meta: false,
+    s: false,
   },
   TOAST_TIME: 3000,
 };
