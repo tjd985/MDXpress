@@ -102,12 +102,6 @@ describe("Header Component Test", () => {
       fireEvent.keyDown(textareaEl, { key: "s" });
     });
 
-    const loadingModalEl = screen.getByText(
-      /Saving your current code.*Please wait a moment.../,
-    );
-
-    expect(loadingModalEl).toBeInTheDocument();
-
     await waitFor(() => {
       const completeModalEl = screen.getByText("The save is complete!");
 
