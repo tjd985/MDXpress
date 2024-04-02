@@ -20,6 +20,7 @@ beforeAll(() => {
   mockServer.listen();
   window.URL.createObjectURL = vi.fn();
 });
+
 beforeEach(() => {
   render(formatTargetComponent(<App />));
 });
