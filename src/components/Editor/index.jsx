@@ -14,6 +14,7 @@ import Button from "../shared/Button";
 import Toast from "../shared/Toast";
 
 import usePackageStore from "../../store/packageList";
+import useScrollStore from "../../store/scroll";
 
 import useLoadPackage from "../../hooks/useLoadPackage";
 
@@ -35,6 +36,7 @@ function MDXEditor({ setPreview }) {
   const lineNumberRef = useRef(null);
 
   const packageList = usePackageStore(state => state.packageList);
+  const { top, left } = useScrollStore(state => state.scroll);
 
   async function compileToJs() {
     try {
@@ -95,6 +97,11 @@ function MDXEditor({ setPreview }) {
       return;
     }
   }
+
+  useEffect(() => {
+    lineNumberRef.current.scrollLeft = left;
+    lineNumberRef.current.scrollTop = top;
+  }, [top, left]);
 
   useEffect(() => {
     setBoilerPlateCode(id, version);
@@ -196,9 +203,9 @@ const EditorInner = styled.div`
 `;
 
 const LineNumbers = styled.div`
+  box-sizing: border-box;
   max-height: 100%;
-  margin: 10px 0 10px 10px;
-  margin-top: 10px;
+  padding: 10px;
 
   text-align: right;
   font-size: 1rem;

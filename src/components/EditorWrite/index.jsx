@@ -35,7 +35,7 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
   function handleScroll(ev) {
     setScroll({
       left: ev.target.scrollLeft,
-      top: ev.target.scrollLeft,
+      top: ev.target.scrollTop,
     });
   }
 
@@ -152,11 +152,11 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
 const CustomEditorWrite = styled.textarea`
   position: absolute;
   top: 0;
-  left: 30px;
+  left: 40px;
 
   box-sizing: border-box;
   flex-grow: 1;
-  width: calc(100% - 30px);
+  width: calc(100% - 40px);
   height: 100%;
   padding: 10px;
   border: none;
