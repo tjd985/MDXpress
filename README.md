@@ -8,16 +8,17 @@ MDXpress는 유저가 mdx문법을 자유롭게 작성할 수 있는 코드 에�
 
 # Content
 
-- ### [✨ Stacks](#e29ca8-stacks-1)
-- ### [⚒️ Feature](#e29a92efb88f-feature-1)
+- ### [✨ Stacks](#-stacks)
+- ### [🏛️ System Architecture](#%EF%B8%8F-system-architecture-1)
+- ### [⚒️ Feature](#%EF%B8%8F-feature-1)
   - [실시간 코드 프리뷰](#1-실시간-코드-프리뷰)
   - [저장 및 링크를 통한 공유](#2-저장-및-링크를-통한-공유)
   - [써드파티 라이브러리 지원](#3-써드파티-라이브러리-지원)
-- ### [🏔️ Challenges](#f09f8f94efb88f-challenges-1)
+- ### [🏔️ Challenges](#%EF%B8%8F-challenges-1)
   - [TTL을 설정하여 삭제된 document에 대한 정보를 어떻게 알 수 있을까?](#1-ttl을-설정하여-삭제된-document에-대한-정보를-어떻게-알-수-있을까)
   - [textArea에 Syntax Highlighting을 입힐 수 있을까?](#2-textarea에-syntax-highlighting을-입힐-수-있을까)
   - [어떻게 써드파티 라이브러리를 지원해 줄 수 있을까?](#3-어떻게-써드파티-라이브러리를-지원해-줄-수-있을까)
-- ### [🤔 Memoir](#f09fa494-memoir-1)
+- ### [🤔 Memoir](#memoir)
 
 <br/>
 <br/>
@@ -259,8 +260,8 @@ textArea를 통해 텍스트 에디터를 구현하게 되면 일반 텍스트�
 따라서 MDX가 실행되는 환경에서는 클라이언트 측에 설치된 라이브러리의 존재를 인식할 수 없었습니다.
 
 <div style="display: flex">
-  <img src="./assets/packageList.png" width="300" />
-  <img src="./assets/package_not_found.png" width="300" />
+  <img src="./assets/packageList.png" width="400" />
+  <img src="./assets/package_not_found.png" width="400" />
 </div>
 <br/>
 
