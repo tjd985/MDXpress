@@ -5,6 +5,8 @@ MDXpress는 사용자가 mdx문법을 자유롭게 작성할 수 있는코드 �
 
 ### 🔗 Depoly URL : https://mdxpress.ohho.dev
 
+> ### ❗️ TypeScript로 점진적인 마이그레이션 중 입니다.
+
 <br />
 <br />
 
