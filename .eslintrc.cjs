@@ -21,6 +21,7 @@ module.exports = {
       },
     },
   ],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -29,7 +30,7 @@ module.exports = {
     sourceType: "module",
   },
   settings: { react: { version: "detect" } },
-  plugins: ["react", "prettier", "react-hooks"],
+  plugins: ["react", "prettier", "react-hooks", "@typescript-eslint"],
   rules: {
     semi: "warn",
     "no-unused-vars": "warn",
