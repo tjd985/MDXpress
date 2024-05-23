@@ -41,7 +41,12 @@ module.exports = {
     "react/jsx-no-bind": "off",
     "react/self-closing-comp": "off",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
+    "react/jsx-filename-extension": "off",
+    "react/destructuring-assignment": "off",
+    "react/jsx-filename-extension": [
+      "warn",
+      { extensions: [".js", ".jsx", ".tsx"] },
+    ],
     "no-param-reassign": 0,
     "no-underscore-dangle": "off",
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
@@ -51,6 +56,6 @@ module.exports = {
     "no-shadow": "off",
     "no-await-in-loop": "off",
     "no-restricted-globals": "off",
-    "react/destructuring-assignment": "off",
+    "no-use-before-define": "off",
   },
 };
