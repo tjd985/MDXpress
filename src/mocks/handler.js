@@ -56,9 +56,7 @@ const handlers = [
       },
     });
   }),
-  http.post(requestSaveURL, ({ params }) => {
-    const { id } = params;
-
+  http.post(requestSaveURL, () => {
     return HttpResponse.json({
       result: "OK",
       status: 200,
