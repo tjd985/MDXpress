@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import Editor from "../Editor";
 import Preview from "../Preview";
-import Modal from "../shared/Modal";
+import Modal from "../shared/Modal/index.tsx";
 import Welcome from "../Welcome";
 
 function Home() {

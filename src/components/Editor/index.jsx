@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
 import ErrorFallback from "../shared/ErrorFallback";
-import Modal from "../shared/Modal";
+import Modal from "../shared/Modal/index.tsx";
 import Loading from "../shared/Loading";
 import Button from "../shared/Button";
 import Toast from "../shared/Toast";

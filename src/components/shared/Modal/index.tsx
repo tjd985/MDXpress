@@ -1,7 +1,7 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-function Modal({ children }) {
+function Modal({ children }: { children: ReactNode }) {
   return (
     <>
       <ModalBackground className="modal-background" />
@@ -38,9 +38,5 @@ const ModalContainer = styled.div`
 
   background-color: #ffffff;
 `;
-
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default Modal;
