@@ -3,7 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Modal from "../shared/Modal";
+import Modal from "../shared/Modal/index.tsx";
 import Loading from "../shared/Loading";
 import Completion from "../shared/Completion";
 
