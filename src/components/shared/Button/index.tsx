@@ -1,7 +1,19 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-function Button({ className, children, handleClick }) {
+type HandleClick = () => void;
+
+interface ButtonInterFace {
+  className: string;
+  handleClick: HandleClick;
+  children: string;
+}
+
+function Button({
+  className,
+  children,
+  handleClick,
+}: ButtonInterFace): ReactNode {
   return (
     <CustomButton className={className} onClick={handleClick}>
       {children}
@@ -31,11 +43,5 @@ const CustomButton = styled.button`
     color: #ffffff;
   }
 `;
-
-Button.propTypes = {
-  className: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  handleClick: PropTypes.func.isRequired,
-};
 
 export default Button;
