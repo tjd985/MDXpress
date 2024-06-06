@@ -2,6 +2,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import Description from "../Description";
+import CloseButton from "../Button/index.tsx";
 
 function Completion({
   imageSrc,
@@ -20,7 +21,9 @@ function Completion({
           🔗 your Link is <em>{linkURL}</em>
         </LinkSection>
       )}
-      <CloseButton onClick={handleClick}>Okay</CloseButton>
+      <CloseButton className="modal-close" handleClick={handleClick}>
+        Okay
+      </CloseButton>
     </Wrapper>
   );
 }
@@ -31,6 +34,19 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 500px;
+
+  .modal-close {
+    min-width: 300px;
+    min-height: 50px;
+    padding: 12px 24px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    margin-top: 30px;
+
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
 `;
 
 const Title = styled.h1`
@@ -66,19 +82,6 @@ const LinkSection = styled.div`
     font-weight: bold;
     font-style: normal;
   }
-`;
-
-const CloseButton = styled.button`
-  min-width: 300px;
-  min-height: 50px;
-  padding: 12px 24px;
-  border: 2px solid #000000;
-  border-radius: 4px;
-  margin-top: 30px;
-
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
 `;
 
 Completion.propTypes = {

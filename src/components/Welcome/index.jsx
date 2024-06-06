@@ -2,6 +2,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import Description from "../shared/Description";
+import CloseButton from "../shared/Button/index.tsx";
 
 function Welcome({ setModalStatus }) {
   return (
@@ -16,7 +17,8 @@ function Welcome({ setModalStatus }) {
 3. If there's a third-party library you'd like to use, you can install and use it!"
       />
       <CloseButton
-        onClick={() => {
+        className="close-modal"
+        handleClick={() => {
           setModalStatus(false);
         }}
       >
@@ -31,23 +33,23 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .close-modal {
+    min-width: 300px;
+    min-height: 50px;
+    padding: 12px 24px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    margin-top: 50px;
+
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
 `;
 
 const Title = styled.h1`
   margin-bottom: 30px;
-`;
-
-const CloseButton = styled.button`
-  min-width: 300px;
-  min-height: 50px;
-  padding: 12px 24px;
-  border: 2px solid #000000;
-  border-radius: 4px;
-  margin-top: 50px;
-
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
 `;
 
 Welcome.propTypes = {
