@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-function Modal({ children }: { children: ReactNode }) {
+interface ModalType {
+  children: ReactNode;
+}
+
+function Modal({ children }: ModalType): ReactNode {
   return (
     <>
       <ModalBackground className="modal-background" />

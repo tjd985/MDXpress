@@ -1,10 +1,16 @@
+import React, { ReactNode } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-import Description from "../shared/Description";
+import Description from "../shared/Description/index.tsx";
 import CloseButton from "../shared/Button/index.tsx";
 
-function Welcome({ setModalStatus }) {
+import CONSTANTS from "../../constants/constants";
+
+interface WelcomeType {
+  setModalStatus: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function Welcome({ setModalStatus }: WelcomeType): ReactNode {
   return (
     <Wrapper>
       <Title>
@@ -12,9 +18,7 @@ function Welcome({ setModalStatus }) {
       </Title>
       <Description
         className="welcome-descripton"
-        text="1. Writing MDX on the left editor will render it in real time on the right!\n
-2. Use cmd + s to save your current code, and share it with your friends through a link!\n
-3. If there's a third-party library you'd like to use, you can install and use it!"
+        text={CONSTANTS.WELCOME_MESSAGE}
       />
       <CloseButton
         className="close-modal"
@@ -51,9 +55,5 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   margin-bottom: 30px;
 `;
-
-Welcome.propTypes = {
-  setModalStatus: PropTypes.func.isRequired,
-};
 
 export default Welcome;

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import Modal from "../shared/Modal/index.tsx";
-import Loading from "../shared/Loading";
-import Completion from "../shared/Completion";
+import Loading from "../shared/Loading/index.tsx";
+import Completion from "../shared/Completion/index.tsx";
 
 import usePackageStore from "../../store/packageList";
 import useScrollStore from "../../store/scroll";

@@ -1,14 +1,25 @@
-import { useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 
 import CONSTANT from "../../../constants/constants";
 
-function Toast({ setToast, toastMessage }) {
+interface ToastType {
+  setToast: React.Dispatch<
+    React.SetStateAction<{
+      status: boolean;
+      message: string;
+    }>
+  >;
+  toastMessage: string;
+}
+
+function Toast({ setToast, toastMessage }: ToastType): ReactNode {
   useEffect(() => {
     const toastTimer = setTimeout(() => {
       setToast({
-        toastStatus: false,
+        status: false,
+        message: "",
       });
     }, CONSTANT.TOAST_TIME);
 

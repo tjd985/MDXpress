@@ -9,9 +9,9 @@ import EditorView from "../EditorView";
 import EditorWrite from "../EditorWrite";
 import ErrorFallback from "../shared/ErrorFallback";
 import Modal from "../shared/Modal/index.tsx";
-import Loading from "../shared/Loading";
-import Button from "../shared/Button";
-import Toast from "../shared/Toast";
+import Loading from "../shared/Loading/index.tsx";
+import Button from "../shared/Button/index.tsx";
+import Toast from "../shared/Toast/index.tsx";
 
 import usePackageStore from "../../store/packageList";
 import useScrollStore from "../../store/scroll";

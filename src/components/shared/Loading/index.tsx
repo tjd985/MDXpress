@@ -1,9 +1,14 @@
 import styled, { keyframes } from "styled-components";
-import PropTypes from "prop-types";
 
-import Description from "../Description";
+import { ReactNode } from "react";
+import Description from "../Description/index.tsx";
 
-function Loading({ className, text }) {
+interface LoadingType {
+  className: string;
+  text: string;
+}
+
+function Loading({ className, text }: LoadingType): ReactNode {
   return (
     <Wrapper className={className}>
       <DotWrapper className="dot-wrapper">
@@ -75,10 +80,5 @@ const Dot = styled.span`
   background-color: grey;
   animation: ${slideAnimation} 1s linear infinite;
 `;
-
-Loading.propTypes = {
-  className: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-};
 
 export default Loading;

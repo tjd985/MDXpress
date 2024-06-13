@@ -1,9 +1,13 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-function Description({ className, text }) {
+interface DescriptionType {
+  className: string;
+  text: string;
+}
+
+function Description({ className, text }: DescriptionType): ReactNode {
   return (
     <StyledSpan className={className}>
       {text.split("\\n").map(txt => (
@@ -27,10 +31,5 @@ const StyledSpan = styled.span`
   font-weight: 500;
   line-height: 24px;
 `;
-
-Description.propTypes = {
-  className: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-};
 
 export default Description;

@@ -1,8 +1,16 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-import Description from "../Description";
+import Description from "../Description/index.tsx";
 import CloseButton from "../Button/index.tsx";
+
+interface CompletionType {
+  imageSrc: string;
+  title: string;
+  description: string;
+  handleClick: () => void;
+  linkURL: string | null;
+}
 
 function Completion({
   imageSrc,
@@ -10,7 +18,7 @@ function Completion({
   description,
   handleClick,
   linkURL = null,
-}) {
+}: CompletionType): ReactNode {
   return (
     <Wrapper>
       <Title>{title}</Title>
@@ -83,13 +91,5 @@ const LinkSection = styled.div`
     font-style: normal;
   }
 `;
-
-Completion.propTypes = {
-  imageSrc: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  linkURL: PropTypes.string.isRequired,
-};
 
 export default Completion;
