@@ -1,13 +1,15 @@
 import { http, HttpResponse } from "msw";
+import CONSTANTS from "../constants/constants";
 
-const requestPackageURL = "/package/:package";
-const requestBoilerPlateURL = "/id/:id/version/:version";
-const requestSaveURL = "/id/:id";
-
+const {
+  MOCK_REQUEST_PACKAGE_URL,
+  MOCK_REQUEST_BOILERPLATE_URL,
+  MOCK_REQUEST_SAVE_URL,
+} = CONSTANTS;
 const allPackages = ["lodash", "nanoid"];
 
 const handlers = [
-  http.get(requestBoilerPlateURL, ({ params }) => {
+  http.get(MOCK_REQUEST_BOILERPLATE_URL, ({ params }) => {
     const { id, version } = params;
 
     if (id === "first" && version === "first") {
@@ -35,7 +37,7 @@ const handlers = [
       },
     });
   }),
-  http.get(requestPackageURL, ({ params }) => {
+  http.get(MOCK_REQUEST_PACKAGE_URL, ({ params }) => {
     const { package: packageName } = params;
 
     const isAvailable = allPackages.includes(packageName);
@@ -56,7 +58,7 @@ const handlers = [
       },
     });
   }),
-  http.post(requestSaveURL, () => {
+  http.post(MOCK_REQUEST_SAVE_URL, () => {
     return HttpResponse.json({
       result: "OK",
       status: 200,
