@@ -10,7 +10,7 @@ import Completion from "../shared/Completion/index.tsx";
 import usePackageStore from "../../store/packageList";
 import useScrollStore from "../../store/scroll";
 
-import saveCurrentCode from "../../services/saveCurrentCode";
+import saveCurrentCode from "../../services/saveCurrentCode.ts";
 import CONSTANTS from "../../constants/constants";
 import completeImage from "../../../assets/complete.jpeg";
 

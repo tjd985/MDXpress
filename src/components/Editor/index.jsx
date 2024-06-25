@@ -18,7 +18,7 @@ import useScrollStore from "../../store/scroll";
 
 import useLoadPackage from "../../hooks/useLoadPackage";
 
-import getVersionCode from "../../services/getVersionCode";
+import getVersionCode from "../../services/getVersionCode.ts";
 
 function MDXEditor({ setPreview }) {
   const { id, version } = useParams();

@@ -1,6 +1,17 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
-async function getBundlePackageCode(packageName) {
+interface PackageResponseType {
+  result: string;
+  status: number;
+  content: {
+    packageInformation: string;
+    bundledPackageCode: string;
+  };
+}
+
+async function getBundlePackageCode(
+  packageName: string,
+): Promise<PackageResponseType | undefined> {
   try {
     const requestURL = `${SERVER_DOMAIN}/package/${packageName}`;
 

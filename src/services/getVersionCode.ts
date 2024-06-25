@@ -1,6 +1,23 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
-async function getVersionCode(id, version) {
+interface BundleCodeType {
+  packageInformation: string;
+  bundledPackageCode: string;
+}
+
+interface VersionCodeResponseType {
+  result: string;
+  status: number;
+  content: {
+    targetCode: string;
+    bundleCodeList: Array<BundleCodeType>;
+  };
+}
+
+async function getVersionCode(
+  id: string,
+  version: string,
+): Promise<VersionCodeResponseType | undefined> {
   try {
     const requestURL = `${SERVER_DOMAIN}/id/${id === ":id" ? "first" : id}/version/${version === ":version" ? "first" : version}`;
 
