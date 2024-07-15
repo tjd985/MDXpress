@@ -1,9 +1,9 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import styled from "styled-components";
 
-import Home from "../Home";
-import Header from "../Header";
-import Description from "../shared/Description";
+import Home from "../Home/index.tsx";
+import Header from "../Header/index.tsx";
+import Description from "../shared/Description/index.tsx";
 
 function App() {
   return (

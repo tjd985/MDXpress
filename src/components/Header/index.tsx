@@ -1,19 +1,21 @@
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import Modal from "../shared/Modal";
-import Loading from "../shared/Loading";
-import Toast from "../shared/Toast";
+import Modal from "../shared/Modal/index.tsx";
+import Loading from "../shared/Loading/index.tsx";
+import Toast from "../shared/Toast/index.tsx";
 
-import usePackageStore from "../../store/packageList";
+import usePackageStore from "../../store/packageList.ts";
 
-import getBundlePackageCode from "../../services/getBundleCode";
-import CONSTANTS from "../../constants/constants";
+import PackageResponseType from "../../types/PackageResponse.ts";
+
+import getBundlePackageCode from "../../services/getBundleCode.ts";
+import CONSTANTS from "../../constants/constants.ts";
 import MDXpressLogo from "../../../assets/MDXpress-logo.png";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [packageBlob, setPackageBlob] = useState(null);
+  const [packageBlob, setPackageBlob] = useState<Blob | null>(null);
   const [toast, setToast] = useState({
     status: false,
     message: "",
@@ -35,18 +37,28 @@ function Header() {
     setPackageBlob(null);
   }, [packageBlob]);
 
-  async function handleSubmit(ev) {
+  async function handleSubmit(ev: KeyboardEvent<HTMLInputElement>) {
     ev.preventDefault();
 
     if (ev.key === CONSTANTS.KEY_ENTER) {
       setIsModalOpen(true);
 
-      const requestResult = await getBundlePackageCode(ev.target.value);
+      const requestResult = (await getBundlePackageCode(
+        ev.currentTarget.value,
+      )) as PackageResponseType;
 
       if (requestResult.result === "Error") {
+        if (!requestResult.message) {
+          return;
+        }
+
         setIsModalOpen(false);
         setToast({ status: true, message: requestResult.message });
 
+        return;
+      }
+
+      if (!requestResult.content) {
         return;
       }
 
@@ -60,7 +72,9 @@ function Header() {
         }),
       );
 
-      ev.target.value = "";
+      const targetEl = ev.target as HTMLInputElement;
+
+      targetEl.value = "";
 
       return;
     }

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Description from "../shared/Description/index.tsx";
 import CloseButton from "../shared/Button/index.tsx";
 
-import CONSTANTS from "../../constants/constants";
+import CONSTANTS from "../../constants/constants.ts";
 
 interface WelcomeType {
   setModalStatus: React.Dispatch<React.SetStateAction<boolean>>;

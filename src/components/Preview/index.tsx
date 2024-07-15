@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
@@ -5,7 +6,7 @@ import PropTypes from "prop-types";
 import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";
 
-function Preview({ previewComponent }) {
+function Preview({ previewComponent }: { previewComponent: ReactNode }) {
   return (
     <Container id="preview">
       <ErrorBoundary key={nanoid(10)} FallbackComponent={ErrorFallback}>

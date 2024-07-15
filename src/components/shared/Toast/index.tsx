@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 
-import CONSTANT from "../../../constants/constants";
+import CONSTANT from "../../../constants/constants.ts";
 
 interface ToastType {
   setToast: React.Dispatch<

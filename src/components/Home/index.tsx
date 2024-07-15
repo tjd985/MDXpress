@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import Editor from "../Editor";
-import Preview from "../Preview";
+import Editor from "../Editor/index.tsx";
+import Preview from "../Preview/index.tsx";
 import Modal from "../shared/Modal/index.tsx";
-import Welcome from "../Welcome";
+import Welcome from "../Welcome/index.tsx";
 
 function Home() {
   const { id } = useParams();
-  const [previewComponent, setPreviewComponent] = useState("");
+  const [previewComponent, setPreviewComponent] = useState<ReactNode>("");
   const [isModalOpen, setIsModalOpen] = useState(id === ":id" || false);
 
   return (
@@ -20,8 +20,8 @@ function Home() {
         </Modal>
       )}
       <Wrapper>
-        <Editor className="editor" setPreview={setPreviewComponent} />
-        <Preview className="preview" previewComponent={previewComponent} />
+        <Editor setPreview={setPreviewComponent} />
+        <Preview previewComponent={previewComponent} />
       </Wrapper>
     </>
   );

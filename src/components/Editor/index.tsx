@@ -1,4 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+  ChangeEvent,
+} from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import { useParams } from "react-router-dom";
 import { compile, run } from "@mdx-js/mdx";
@@ -13,14 +21,20 @@ import Loading from "../shared/Loading/index.tsx";
 import Button from "../shared/Button/index.tsx";
 import Toast from "../shared/Toast/index.tsx";
 
-import usePackageStore from "../../store/packageList";
-import useScrollStore from "../../store/scroll";
+import usePackageStore from "../../store/packageList.ts";
+import useScrollStore from "../../store/scroll.ts";
 
-import useLoadPackage from "../../hooks/useLoadPackage";
+import useLoadPackage from "../../hooks/useLoadPackage.ts";
 
 import getVersionCode from "../../services/getVersionCode.ts";
 
-function MDXEditor({ setPreview }) {
+import { VersionCodeResponseType } from "../../types/VersionCodeRsponse.ts";
+
+function MDXEditor({
+  setPreview,
+}: {
+  setPreview: Dispatch<SetStateAction<ReactNode>>;
+}) {
   const { id, version } = useParams();
 
   const [userCode, setUserCode] = useState("");
@@ -33,7 +47,7 @@ function MDXEditor({ setPreview }) {
   });
   const loadPackage = useLoadPackage();
 
-  const lineNumberRef = useRef(null);
+  const lineNumberRef = useRef<HTMLDivElement>(null);
 
   const packageList = usePackageStore(state => state.packageList);
   const { top, left } = useScrollStore(state => state.scroll);
@@ -47,25 +61,37 @@ function MDXEditor({ setPreview }) {
           baseUrl: "/Users/ohseongho/Desktop/MDXpress/node_modules",
         },
       );
+      // @ts-expect-error
       const result = await run(compiledCode.value, jsxRuntime);
       const MDXContent = result.default;
 
       setPreview(<MDXContent />);
-    } catch (error) {
+    } catch (error: any) {
       setPreview(<ErrorFallback error={error} />);
     }
   }
 
-  async function setBoilerPlateCode(id, version) {
+  async function setBoilerPlateCode(id: string, version: string) {
     try {
       setIsModalOpen(id !== ":id" || false);
 
-      const requestResult = await getVersionCode(id, version);
+      const requestResult = (await getVersionCode(
+        id,
+        version,
+      )) as VersionCodeResponseType;
 
       if (requestResult.result === "Error") {
+        if (!requestResult.message) {
+          return;
+        }
+
         setToast({ status: true, message: requestResult.message });
         setIsModalOpen(false);
 
+        return;
+      }
+
+      if (!requestResult.content) {
         return;
       }
 
@@ -90,7 +116,7 @@ function MDXEditor({ setPreview }) {
     }
   }
 
-  function updateUserCode(ev) {
+  function updateUserCode(ev: ChangeEvent<HTMLInputElement>) {
     if (editorMode === "code") {
       setUserCode(ev.target.value);
 
@@ -99,11 +125,15 @@ function MDXEditor({ setPreview }) {
   }
 
   useEffect(() => {
-    lineNumberRef.current.scrollLeft = left;
-    lineNumberRef.current.scrollTop = top;
+    lineNumberRef.current!.scrollLeft = left;
+    lineNumberRef.current!.scrollTop = top;
   }, [top, left]);
 
   useEffect(() => {
+    if (typeof id !== "string" || typeof version !== "string") {
+      return;
+    }
+
     setBoilerPlateCode(id, version);
   }, [id, version]);
 
@@ -114,7 +144,7 @@ function MDXEditor({ setPreview }) {
   }, [userCode]);
 
   useEffect(() => {
-    lineNumberRef.current.innerHTML = Array(lineNumber)
+    lineNumberRef.current!.innerHTML = Array(lineNumber)
       .fill("<span></span>")
       .join("");
   }, [lineNumber, editorMode]);
