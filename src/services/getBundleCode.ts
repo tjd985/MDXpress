@@ -1,13 +1,6 @@
-const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
+import PackageResponseType from "../types/PackageResponse.ts";
 
-interface PackageResponseType {
-  result: string;
-  status: number;
-  content: {
-    packageInformation: string;
-    bundledPackageCode: string;
-  };
-}
+const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
 async function getBundlePackageCode(
   packageName: string,

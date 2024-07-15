@@ -1,18 +1,6 @@
+import { VersionCodeResponseType } from "../types/VersionCodeRsponse.ts";
+
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
-
-interface BundleCodeType {
-  packageInformation: string;
-  bundledPackageCode: string;
-}
-
-interface VersionCodeResponseType {
-  result: string;
-  status: number;
-  content: {
-    targetCode: string;
-    bundleCodeList: Array<BundleCodeType>;
-  };
-}
 
 async function getVersionCode(
   id: string,
