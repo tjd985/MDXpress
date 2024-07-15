@@ -7,11 +7,11 @@ import Modal from "../shared/Modal/index.tsx";
 import Loading from "../shared/Loading/index.tsx";
 import Completion from "../shared/Completion/index.tsx";
 
-import usePackageStore from "../../store/packageList";
-import useScrollStore from "../../store/scroll";
+import usePackageStore from "../../store/packageList.ts";
+import useScrollStore from "../../store/scroll.ts";
 
 import saveCurrentCode from "../../services/saveCurrentCode.ts";
-import CONSTANTS from "../../constants/constants";
+import CONSTANTS from "../../constants/constants.ts";
 import completeImage from "../../../assets/complete.jpeg";
 
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;

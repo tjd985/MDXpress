@@ -8,8 +8,8 @@ import PropTypes from "prop-types";
 import ErrorBoundary from "../shared/ErrorBoundary";
 import ErrorFallback from "../shared/ErrorFallback";
 
-import useScrollStore from "../../store/scroll";
-import usePackageStore from "../../store/packageList";
+import useScrollStore from "../../store/scroll.ts";
+import usePackageStore from "../../store/packageList.ts";
 
 function EditorView({ userCode, currentMode }) {
   const [starryNight, setStarryNight] = useState("");
