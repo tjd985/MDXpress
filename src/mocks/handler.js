@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import CONSTANTS from "../constants/constants";
+import CONSTANTS from "../constants/constants.ts";
 
 const {
   MOCK_REQUEST_PACKAGE_URL,

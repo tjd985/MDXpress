@@ -1,9 +1,14 @@
-import usePackageStore from "../store/packageList";
+import usePackageStore from "../store/packageList.ts";
+
+interface BundlePackage {
+  bundledPackageCode: string;
+  packageInformation: string;
+}
 
 function useLoadPackage() {
   const { packageList, setPackage } = usePackageStore();
 
-  function loadPackage(bundleCodeList) {
+  function loadPackage(bundleCodeList: Array<BundlePackage>) {
     bundleCodeList.forEach(bundleCode => {
       const { packageInformation, bundledPackageCode } = bundleCode;
 
