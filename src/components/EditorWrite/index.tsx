@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, UIEvent, KeyboardEvent } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 import Modal from "../shared/Modal/index.tsx";
 import Loading from "../shared/Loading/index.tsx";
@@ -10,6 +9,8 @@ import Completion from "../shared/Completion/index.tsx";
 import usePackageStore from "../../store/packageList.ts";
 import useScrollStore from "../../store/scroll.ts";
 
+import EditorWriteType from "../../types/EditorWriteType.ts";
+
 import saveCurrentCode from "../../services/saveCurrentCode.ts";
 import CONSTANTS from "../../constants/constants.ts";
 import completeImage from "../../../assets/complete.jpeg";
@@ -17,14 +18,19 @@ import completeImage from "../../../assets/complete.jpeg";
 const { KEYBOARD_STATUS, KEY_CMD, KEY_S } = CONSTANTS;
 const CLIENT_URL = import.meta.env.VITE_CLIENT_URL;
 
-function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
+function EditorWrite({
+  updateUserCode,
+  setLineNumber,
+  userCode,
+  currentMode,
+}: EditorWriteType) {
   const [modalStatus, setModaStatus] = useState({
     isModalOpen: false,
     isSaved: false,
   });
   const [cursor, setCursor] = useState(0);
-  const textAreaRef = useRef();
-  const { id } = useParams();
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const { id } = useParams<string>();
   const navigate = useNavigate();
 
   const packageList = usePackageStore(state => state.packageList);
@@ -32,15 +38,19 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
 
   const currentURL = `${CLIENT_URL}${useLocation().pathname}`;
 
-  function handleScroll(ev) {
+  function handleScroll(ev: UIEvent<HTMLElement>) {
+    const targetEl = ev.target as HTMLElement;
+
     setScroll({
-      left: ev.target.scrollLeft,
-      top: ev.target.scrollTop,
+      left: targetEl.scrollLeft,
+      top: targetEl.scrollTop,
     });
   }
 
-  async function handleKeyPress(ev) {
-    setLineNumber(ev.target.value.split("\n").length);
+  async function handleKeyPress(ev: KeyboardEvent<HTMLTextAreaElement>) {
+    const textAreaEl = ev.target as HTMLTextAreaElement;
+
+    setLineNumber(textAreaEl.value.split("\n").length);
 
     if (ev.type === "keyup") {
       KEYBOARD_STATUS[ev.key] = false;
@@ -53,10 +63,10 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
     if (ev.key === "Tab") {
       ev.preventDefault();
 
-      const start = ev.target.selectionStart;
-      const editedText = `${ev.target.value.slice(0, start)}  ${ev.target.value.slice(start)}`;
+      const start = textAreaEl.selectionStart;
+      const editedText = `${textAreaEl.value.slice(0, start)}  ${textAreaEl.value.slice(start)}`;
 
-      ev.target.value = editedText;
+      textAreaEl.value = editedText;
 
       updateUserCode(ev);
       setCursor(start + 2);
@@ -72,9 +82,9 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
         isSaved: false,
       });
 
-      const requestResult = await saveCurrentCode(userCode, id, packageList);
+      const requestResult = await saveCurrentCode(userCode, id!, packageList);
 
-      if (requestResult.result === "Error") {
+      if (requestResult!.result === "Error") {
         setModaStatus({
           isModalOpen: false,
           isSaved: false,
@@ -91,7 +101,7 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
       KEYBOARD_STATUS[KEY_CMD] = false;
       KEYBOARD_STATUS[KEY_S] = false;
 
-      const { latestVersion, temporaryUser } = requestResult.content;
+      const { latestVersion, temporaryUser } = requestResult!.content;
       const { _id: temporaryUserId } = temporaryUser;
       const { version, code } = latestVersion;
 
@@ -104,11 +114,11 @@ function EditorWrite({ updateUserCode, setLineNumber, userCode, currentMode }) {
   }
 
   useEffect(() => {
-    textAreaRef.current.setSelectionRange(cursor, cursor);
+    textAreaRef.current!.setSelectionRange(cursor, cursor);
   }, [cursor]);
 
   useEffect(() => {
-    setLineNumber(textAreaRef.current.value.split("\n").length);
+    setLineNumber(textAreaRef.current!.value.split("\n").length);
   }, [currentMode]);
 
   return (
@@ -180,12 +190,5 @@ const CustomEditorWrite = styled.textarea`
     display: none;
   }
 `;
-
-EditorWrite.propTypes = {
-  updateUserCode: PropTypes.func.isRequired,
-  setLineNumber: PropTypes.func.isRequired,
-  userCode: PropTypes.string.isRequired,
-  currentMode: PropTypes.string.isRequired,
-};
 
 export default EditorWrite;

@@ -1,3 +1,7 @@
+interface KEYBOARD_STATUS_TYPE {
+  [key: string]: boolean;
+}
+
 const CONSTANTS = {
   KEY_CMD: "Meta",
   KEY_S: "s",
@@ -6,7 +10,7 @@ const CONSTANTS = {
   KEYBOARD_STATUS: {
     Meta: false,
     s: false,
-  },
+  } as KEYBOARD_STATUS_TYPE,
   TOAST_TIME: 3000,
   WELCOME_MESSAGE:
     "1. Writing MDX on the left editor will render it in real time on the right!\\n" +

@@ -22,6 +22,7 @@ interface SaveCodeResponseType {
     latestVersion: LatestVersionType;
     temporaryUser: {
       version: Array<VersionType>;
+      _id: string;
     };
   };
 }
@@ -29,7 +30,7 @@ interface SaveCodeResponseType {
 async function saveCurrentCode(
   code: string,
   id: string,
-  packageList: { packageName: string },
+  packageList: { [packageName: string]: string },
 ): Promise<SaveCodeResponseType | undefined> {
   try {
     const requestURL = `${SERVER_DOMAIN}/id/${id === ":id" ? "first" : id}`;

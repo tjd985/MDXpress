@@ -11,14 +11,17 @@ import ErrorFallback from "../shared/ErrorFallback";
 import useScrollStore from "../../store/scroll.ts";
 import usePackageStore from "../../store/packageList.ts";
 
-function EditorView({ userCode, currentMode }) {
+import EditorviewType from "../../types/EditorViewType.ts";
+
+function EditorView({ userCode, currentMode }: EditorviewType) {
   const [starryNight, setStarryNight] = useState("");
-  const viewRef = useRef(null);
+  const viewRef = useRef<HTMLDivElement>(null);
 
   const { left, top } = useScrollStore(state => state.scroll);
   const packageList = usePackageStore(state => state.packageList);
 
   async function generageStarryNight() {
+    // @ts-expect-error
     setStarryNight(await createStarryNight(all));
   }
 
@@ -27,8 +30,8 @@ function EditorView({ userCode, currentMode }) {
   }, []);
 
   useEffect(() => {
-    viewRef.current.scrollLeft = left;
-    viewRef.current.scrollTop = top;
+    viewRef.current!.scrollLeft = left;
+    viewRef.current!.scrollTop = top;
   }, [left, top]);
 
   return (
@@ -36,10 +39,12 @@ function EditorView({ userCode, currentMode }) {
       <CustomEditorView className="editor-view" ref={viewRef}>
         {starryNight &&
           toJsxRuntime(
+            // @ts-expect-error
             starryNight.highlight(
               currentMode === "code" ? userCode : JSON.stringify(packageList),
               "source.mdx",
             ),
+            // @ts-expect-error
             {
               ...JSXRuntime,
             },

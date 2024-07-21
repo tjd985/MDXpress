@@ -5,16 +5,16 @@ import {
   Dispatch,
   SetStateAction,
   ReactNode,
+  KeyboardEvent,
   ChangeEvent,
 } from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import { useParams } from "react-router-dom";
 import { compile, run } from "@mdx-js/mdx";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-import EditorView from "../EditorView";
-import EditorWrite from "../EditorWrite";
+import EditorView from "../EditorView/index.tsx";
+import EditorWrite from "../EditorWrite/index.tsx";
 import ErrorFallback from "../shared/ErrorFallback";
 import Modal from "../shared/Modal/index.tsx";
 import Loading from "../shared/Loading/index.tsx";
@@ -38,7 +38,7 @@ function MDXEditor({
   const { id, version } = useParams();
 
   const [userCode, setUserCode] = useState("");
-  const [editorMode, setEditorMode] = useState("code");
+  const [editorMode, setEditorMode] = useState<"package" | "code">("code");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [lineNumber, setLineNumber] = useState(1);
   const [toast, setToast] = useState({
@@ -116,9 +116,13 @@ function MDXEditor({
     }
   }
 
-  function updateUserCode(ev: ChangeEvent<HTMLInputElement>) {
+  function updateUserCode(
+    ev: KeyboardEvent<HTMLTextAreaElement> | ChangeEvent<HTMLTextAreaElement>,
+  ) {
     if (editorMode === "code") {
-      setUserCode(ev.target.value);
+      const textAreaEl = ev.target as HTMLTextAreaElement;
+
+      setUserCode(textAreaEl.value);
 
       return;
     }
@@ -266,9 +270,5 @@ const LineNumbers = styled.div`
     display: none;
   }
 `;
-
-MDXEditor.propTypes = {
-  setPreview: PropTypes.func.isRequired,
-};
 
 export default MDXEditor;
