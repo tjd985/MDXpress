@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import PropTypes from "prop-types";
 
 import CONSTANT from "../../../constants/constants.ts";
 
@@ -62,10 +61,5 @@ const ToastPopup = styled.div`
   text-align: center;
   animation: ${fadeInUp} 1s ease-in-out;
 `;
-
-Toast.propTypes = {
-  setToast: PropTypes.func.isRequired,
-  toastMessage: PropTypes.string.isRequired,
-};
 
 export default Toast;
